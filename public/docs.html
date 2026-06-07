@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OBSERVIUM·AI — Documentation</title>
+  <meta name="description" content="OBSERVIUM·AI v1.0 — a model, reference architecture, and protocol for integrated transdisciplinary observability. Background, architecture, protocol, features, and contact." />
+  <!--
+    Standalone, shareable documentation page for OBSERVIUM·AI.
+    This file is intentionally self-contained (no build step, no app bundle).
+    It lives in /public so it deploys to its own URL, e.g. /docs.html.
+    Content is curated from docs/OBSERVIUM_AI_Community_Wiki_v1.0.md.
+    ✏️ Edit copy directly below. Drop diagram images in /public and reference them.
+  -->
+  <style>
+    :root{
+      --bg:#0a0e1a; --panel:#0f172a; --panel2:#111827; --line:#1e293b;
+      --text:#e2e8f0; --muted:#94a3b8; --dim:#64748b; --faint:#475569;
+      --green:#22c55e; --blue:#3b82f6; --amber:#f59e0b; --red:#ef4444;
+      --purple:#a855f7; --cyan:#7dd3fc;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;background:var(--bg);color:var(--text);
+      font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      line-height:1.6;-webkit-font-smoothing:antialiased;
+    }
+    a{color:var(--blue);text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{font-family:'SF Mono',Menlo,monospace;background:#0b1120;border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:0.88em;color:var(--cyan)}
+
+    /* layout */
+    .wrap{display:flex;min-height:100vh}
+    nav.side{
+      width:240px;flex-shrink:0;border-right:1px solid var(--line);
+      background:#0b1120;position:sticky;top:0;height:100vh;overflow:auto;padding:22px 0;
+    }
+    nav.side .brand{padding:0 22px 18px;border-bottom:1px solid var(--line);margin-bottom:14px}
+    nav.side .brand .logo{
+      font-size:17px;font-weight:800;letter-spacing:-0.01em;
+      background:linear-gradient(135deg,var(--green),var(--blue),var(--purple));
+      -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    }
+    nav.side .brand .sub{font-size:9px;color:var(--faint);letter-spacing:0.12em;margin-top:3px}
+    nav.side a.link{
+      display:block;padding:9px 22px;color:var(--muted);font-size:14px;
+      border-left:2px solid transparent;
+    }
+    nav.side a.link:hover{color:var(--text);text-decoration:none;background:#22c55e0a;border-left-color:var(--green)}
+    nav.side .back{margin:18px 22px 0;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--dim)}
+
+    main{flex:1;min-width:0}
+    .hero{
+      padding:64px 48px 40px;border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg,#0f1729,var(--bg));
+    }
+    .hero .badge{
+      display:inline-flex;align-items:center;gap:8px;padding:6px 13px;border-radius:999px;
+      background:linear-gradient(135deg,#f59e0b12,#22c55e12);border:1px solid #f59e0b33;
+      font-size:11px;color:var(--amber);font-weight:700;margin-bottom:20px;
+    }
+    .hero h1{font-size:40px;line-height:1.15;margin:0 0 10px;font-weight:800}
+    .hero .tag{font-size:17px;color:var(--muted);max-width:760px;margin:0}
+    .hero .pillars{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
+    .hero .pillars span{
+      font-size:12px;padding:6px 13px;border-radius:6px;background:var(--panel);
+      border:1px solid var(--line);color:var(--text);font-weight:600;
+    }
+
+    section{padding:48px;max-width:900px;border-bottom:1px solid var(--line)}
+    section h2{font-size:13px;letter-spacing:0.12em;color:var(--green);font-weight:700;margin:0 0 6px;text-transform:uppercase}
+    section h2 + .lead{font-size:26px;font-weight:800;margin:0 0 22px;line-height:1.25}
+    section h3{font-size:18px;font-weight:700;margin:28px 0 10px}
+    section p{font-size:15px;color:var(--muted);margin:0 0 14px}
+    section p strong, section li strong{color:var(--text)}
+    section ul{margin:0 0 16px;padding-left:20px}
+    section li{font-size:15px;color:var(--muted);margin-bottom:8px}
+
+    .callout{padding:16px 18px;border-radius:9px;margin:0 0 18px;border-left:3px solid var(--red);background:#ef444410}
+    .callout .t{font-size:11px;font-weight:700;letter-spacing:0.04em;color:var(--red);margin-bottom:6px;text-transform:uppercase}
+    .callout.g{border-left-color:var(--green);background:#22c55e10}
+    .callout.g .t{color:var(--green)}
+    .callout.b{border-left-color:var(--blue);background:#3b82f610}
+    .callout.b .t{color:var(--blue)}
+    .callout .x{font-size:14.5px;color:#cbd5e1}
+
+    pre.diagram{
+      margin:0 0 20px;padding:18px;background:var(--panel);border:1px solid var(--line);
+      border-radius:9px;color:var(--cyan);font-size:13px;line-height:1.5;
+      font-family:'SF Mono',Menlo,monospace;overflow-x:auto;white-space:pre;
+    }
+    .dlabel{font-size:10px;letter-spacing:0.06em;color:var(--faint);margin-bottom:7px;text-transform:uppercase}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:0 0 16px}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:16px}
+    .card .h{font-size:15px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:7px}
+    .card p{font-size:13.5px;margin:0}
+    .pill-green{border-top:2px solid var(--green)}
+    .pill-amber{border-top:2px solid var(--amber)}
+    .pill-red{border-top:2px solid #b45309}
+
+    .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 16px}
+    .twocol .box{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:16px}
+    .twocol .box .h{font-size:13px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:8px}
+    .twocol .box.locked .h{color:var(--red)} .twocol .box.cfg .h{color:var(--blue)}
+    .twocol .box ul{margin:0;padding-left:18px} .twocol .box li{font-size:13px;margin-bottom:5px}
+
+    figure.fig{margin:6px 0 22px}
+    figure.fig img{width:100%;display:block;border-radius:10px;border:1px solid var(--line);background:#fff;padding:8px}
+    figure.fig figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;text-align:center;line-height:1.5}
+
+    .connect{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:6px 0 18px}
+    .person{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px}
+    .person .n{font-size:17px;font-weight:700} .person .r{font-size:12px;color:var(--green);margin:2px 0} .person .u{font-size:12px;color:var(--muted)}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+    .links a{display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border-radius:7px;background:var(--panel);border:1px solid var(--line);color:var(--text);font-size:13px;font-weight:600}
+    .links a:hover{border-color:var(--green);text-decoration:none}
+    footer{padding:30px 48px 60px;color:var(--faint);font-size:12px;max-width:900px}
+
+    @media (max-width:820px){
+      nav.side{display:none}
+      .hero{padding:40px 22px 30px}.hero h1{font-size:30px}
+      section{padding:32px 22px}.twocol{grid-template-columns:1fr}
+    }
+    ::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:#334155;border-radius:4px}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <!-- Sidebar -->
+  <nav class="side">
+    <div class="brand">
+      <div class="logo">OBSERVIUM·AI</div>
+      <div class="sub">DOCUMENTATION · v1.0</div>
+    </div>
+    <a class="link" href="#background">📖&nbsp;&nbsp;Background</a>
+    <a class="link" href="#architecture">🏗️&nbsp;&nbsp;Architecture</a>
+    <a class="link" href="#protocol">📐&nbsp;&nbsp;Protocol</a>
+    <a class="link" href="#features">✨&nbsp;&nbsp;Features</a>
+    <a class="link" href="#connect">🔗&nbsp;&nbsp;Connect</a>
+    <div class="back"><a href="/">← Back to the demo</a></div>
+  </nav>
+
+  <main>
+    <!-- Hero -->
+    <header class="hero">
+      <div class="badge">🌍 World Biodiversity Forum 2026 — Davos</div>
+      <h1>OBSERVIUM·AI</h1>
+      <p class="tag">A model, a reference architecture, and a protocol for <strong>integrated transdisciplinary observability</strong> — detecting compound risks that emerge between institutional and disciplinary boundaries, not within any single one.</p>
+      <div class="pillars">
+        <span>🧩 Systems Model</span>
+        <span>🏗️ Reference Architecture</span>
+        <span>📐 Recommended Protocol</span>
+      </div>
+    </header>
+
+    <!-- BACKGROUND -->
+    <section id="background">
+      <h2>Background</h2>
+      <div class="lead">The crisis lives in the gaps between institutions</div>
+      <p>A farmer is bitten by a cobra near a paddy field just before harvest. The health centre, if it reports at all, records a snakebite admission. The species — a cobra, near a field, at monsoon onset, 200&nbsp;metres from a forest edge cleared six months ago for construction — is never recorded. The ecological signal is lost. The agricultural signal is lost. The pattern connecting this bite to seven others in the same zone over three weeks is invisible to every agency individually.</p>
+      <p>The forest department doesn't know. The agricultural officer doesn't know. The panchayat lead doesn't know. The researcher whose species-distribution model predicted exactly this risk zone doesn't know. <strong>This is not a data-collection failure — it is an architectural one.</strong> The systems that exist were designed to answer single questions within single mandates. None was designed to ask what one incident means across every domain it touches at once.</p>
+
+      <div class="callout">
+        <div class="t">⚠️ What this costs</div>
+        <div class="x">India loses an estimated <strong>58,000 people to snakebite every year</strong>. 94% of those deaths are rural; 77% happen outside health facilities. Official surveillance captures roughly <strong>10%</strong> of expected hospital deaths — before counting the majority that never reach a facility at all. The ecological and agricultural signals that predict this risk with ~76% accuracy already exist. What's missing is a protocol that connects them at the moment a bite occurs.</div>
+      </div>
+
+      <figure class="fig">
+        <img src="/snakebitecase.png" alt="Ramanagara District — snakebite as a systemic signal" />
+        <figcaption>Grounding scenario — Ramanagara District, Karnataka. OBSERVIUM·AI transforms fragmented field reports into a cross-domain compound signal: individual incidents bind into patterns, which converge into one actionable insight no single agency could see.</figcaption>
+      </figure>
+
+      <h3>A model, not a product</h3>
+      <p>OBSERVIUM·AI v1.0 is a <strong>reference architecture and protocol specification</strong> — not a platform, application, dashboard, or product. The closest analogy is UML: a language for describing how systems should be built, independent of any codebase. Any cross-domain monitoring deployment — a district snakebite system, a marine observatory, an urban wildlife-conflict tracker — can be built on this framework regardless of its technology stack. The framework defines <em>what</em> should happen, in what order, with what guarantees. The implementation is yours.</p>
+      <p>Snakebite in Karnataka is the <strong>grounding scenario</strong>, not the subject. A leopard in a peri-urban area, an elephant in a crop corridor, a water-contamination point — each is one incident across four institutional mandates, none of which owns the whole picture. OBSERVIUM·AI was built for all of them.</p>
+    </section>
+
+    <!-- ARCHITECTURE -->
+    <section id="architecture">
+      <h2>Architecture</h2>
+      <div class="lead">A nine-node signal ontology across three pillars</div>
+      <p>Every input begins as a raw <strong>Signal</strong> and, through defined transformation steps, becomes <strong>Intelligence</strong> that reaches the right decision-maker at the right time. Each step has a name, a rule, and a purpose. Nothing is discarded; everything is preserved — which is what lets the system answer, in 2026, questions about something captured in 2024.</p>
+
+      <div class="dlabel">Signal Ontology v1.0 — pipeline</div>
+      <pre class="diagram">Signal ─▶ Incident ─▶ Typed Incident ─▶ Event ─▶ Compound ─▶ Reaction ─▶ Intelligence ─▶ Outcome
+  1         2              3              4         5            6             7              8
+  │                                                                                          │
+  └──────────────────────────── feedback: outcomes recalibrate detection ◀───────────────────┘
+                         Exception Branch (9) — escape route for signals that don't fit, attachable at any node</pre>
+
+      <ul>
+        <li><strong>Signal → Incident → Typed Incident:</strong> raw input is preserved, given a permanent trace ID, then classified across <em>every</em> domain it belongs to simultaneously (a snakebite is a health <em>and</em> an ecology incident in the same pass).</li>
+        <li><strong>Event:</strong> multiple typed incidents from the same scene bind into one richer, redundant record — if the voice report fails, the photo persists.</li>
+        <li><strong>Compound:</strong> a cross-domain pattern that no single agency sees — health cases + camera-trap anomalies + an antivenom stock gap + monsoon onset, bound by spatial, temporal, and <strong>systemic-factor</strong> dimensions.</li>
+        <li><strong>Reaction → Intelligence → Outcome:</strong> a pattern crossing threshold fires a new signal, an alarm, and a consequence cascade; the Intelligence layer presents ranked options (AI presents, humans decide); outcomes feed back and recalibrate the system.</li>
+      </ul>
+
+      <h3>The three pillars</h3>
+      <div class="grid">
+        <div class="card pill-green">
+          <div class="h">🟢 Frontline Capture</div>
+          <p><strong>Nodes 1–4.</strong> Any input, any modality, any observer — voice, image, sensor, text, and Indigenous &amp; Local Knowledge (ILK) as a first-class modality. Offline-first store-and-forward, raw preservation, five-level redundancy.</p>
+        </div>
+        <div class="card pill-amber">
+          <div class="h">🟠 Midline Synthesis</div>
+          <p><strong>Nodes 5–6.</strong> Where cross-domain intelligence is created: three-dimensional Compound binding, a configurable Systemic Factor Registry, cross-domain deduplication, escalation algebra, and Risk Window Mode.</p>
+        </div>
+        <div class="card pill-red">
+          <div class="h">🔴 Backline Decision-Making</div>
+          <p><strong>Nodes 7–8.</strong> Five-layer stakeholder routing, RAG-based intelligence synthesis, span-level governance (SHACL over JSON-LD), outcome tracking, and the adaptive calibration feed.</p>
+        </div>
+      </div>
+
+      <figure class="fig">
+        <img src="/component-architecture.png" alt="OBSERVIUM·AI component architecture" />
+        <figcaption>OBSERVIUM·AI — full component architecture, from the field/edge layer through gateway, core platform, domain packages, and institutional systems, to human-in-the-loop stakeholder feedback, governance, and audit.</figcaption>
+      </figure>
+    </section>
+
+    <!-- PROTOCOL -->
+    <section id="protocol">
+      <h2>Protocol</h2>
+      <div class="lead">What a compliant instantiation must do</div>
+      <p>OBSERVIUM·AI defines the <em>what</em>; your implementation is the <em>how</em>. A compliant v1.0 instantiation must:</p>
+      <ul>
+        <li>Implement all <strong>nine nodes</strong> of the Signal Ontology with the defined transformation rules.</li>
+        <li>Preserve <strong>raw inputs</strong> at Node 1 alongside every structured field added later.</li>
+        <li>Assign <code>trace_id</code> / <code>span_id</code> at Node 2 and propagate them through every node (end-to-end causal reconstruction).</li>
+        <li>Apply <strong>multi-domain simultaneous classification</strong> at Node 3.</li>
+        <li>Implement <strong>three-dimensional binding</strong> at Node 5 with a configurable Systemic Factor Registry.</li>
+        <li>Implement the <strong>five-layer stakeholder routing topology</strong> at Node 7.</li>
+        <li>Enforce <strong>span-level governance</strong> via SHACL over JSON-LD.</li>
+        <li>Implement the <strong>feedback loop</strong> from Node 8 back to Node 1.</li>
+      </ul>
+
+      <h3>The governance boundary — hardcoded vs configurable</h3>
+      <div class="twocol">
+        <div class="box locked">
+          <div class="h">🔒 Hardcoded (non-overridable)</div>
+          <ul>
+            <li>IHR 2005 notification obligations (Annex 2 criteria)</li>
+            <li>CBD Article 26 biodiversity reporting</li>
+            <li>Sendai Framework disaster-risk thresholds</li>
+            <li>National wildlife-act notification requirements</li>
+            <li>Hardcoded routing fallback paths</li>
+          </ul>
+        </div>
+        <div class="box cfg">
+          <div class="h">⚙️ Configurable (per deployment)</div>
+          <ul>
+            <li>Domain taxonomy &amp; Systemic Factor Registry</li>
+            <li>Spatial / temporal binding windows</li>
+            <li>Escalation thresholds &amp; domain-count multipliers</li>
+            <li>Stakeholder routing paths (Layers 3–4)</li>
+            <li>ILK credibility scoring, outcome indicators, Risk Window criteria</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="dlabel">Five-layer stakeholder routing topology</div>
+      <pre class="diagram">5 · Broadcast      Risk Window Mode, emergency &amp; public channels
+4 · Informal       monitoring roles, community bulletins, guest authority   ┐ defined +
+3 · Configurable   organisation-defined escalation paths                    ┘ discovered
+2 · Regulatory     IHR · CBD · Sendai · wildlife acts
+1 · Hardcoded      non-negotiable — always fires, cannot be overridden</pre>
+      <div class="callout b">
+        <div class="t">Interoperability principle</div>
+        <div class="x">Agencies don't need a shared mandate to coordinate — they need a <strong>shared identifier and a delivery contract</strong>. The common trace ID and the routing topology supply both. Integration with existing systems (GBIF Darwin Core, WHO IDSR/IDSP, Camtrap DP, iNaturalist, ODK) is via endpoint-relay adaptors — no agency has to change its infrastructure.</div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features">
+      <h2>Features</h2>
+      <div class="lead">What the framework guarantees</div>
+      <figure class="fig">
+        <img src="/keycharacteristics.png" alt="OBSERVIUM·AI key characteristics" />
+        <figcaption>The six defining characteristics — frontline multimodal input, cross-domain pattern recognition, a transdisciplinary relay hierarchy, a live stakeholder map with RACI, stakeholder discovery &amp; community, and open architecture — with the AI/tech layer that powers each.</figcaption>
+      </figure>
+      <div class="grid">
+        <div class="card"><div class="h">🎙️ Multimodal capture</div><p>Voice, image, video, sensor, text, and ILK — from any device, in any language, online or offline.</p></div>
+        <div class="card"><div class="h">📶 Offline-first redundancy</div><p>Store-and-forward queues and five-level redundancy: no incident is lost to network failure.</p></div>
+        <div class="card"><div class="h">🏷️ Multi-domain typing</div><p>One classification pass tags an incident across every domain it belongs to — transdisciplinarity at the data level.</p></div>
+        <div class="card"><div class="h">⚗️ Compound formation</div><p>Cross-domain patterns bound by spatial, temporal, and systemic-factor dimensions surface what silos miss.</p></div>
+        <div class="card"><div class="h">🗺️ Stakeholder topology</div><p>Five routing layers with defined <em>and</em> discovered stakeholders, plus RACI for the response.</p></div>
+        <div class="card"><div class="h">🤝 ILK as first-class data</div><p>Indigenous &amp; Local Knowledge enters as an equal input under CARE Principles and Local Contexts TK Labels.</p></div>
+        <div class="card"><div class="h">🔐 Span-level governance</div><p>Governance attaches to processing spans, not flat records — deterministic, auditable, and portable with the data.</p></div>
+        <div class="card"><div class="h">🕰️ Retroactive queryability</div><p>Raw preservation means old incidents can be re-analysed against new models and evidence published after capture.</p></div>
+        <div class="card"><div class="h">🔄 Learning loop</div><p>Intervention outcomes recalibrate detection thresholds and binding rules — the deployment gets more accurate over time.</p></div>
+      </div>
+      <div class="callout g">
+        <div class="t">AI as an operational nervous regulator</div>
+        <div class="x">AI accelerates structuring (Node 2), classification (Node 3), pattern recognition (Node 5), and intelligence synthesis (Node 7) — but it does not make hardcoded/regulatory routing decisions, does not activate discovered stakeholders without human confirmation, and does not decide interventions. <strong>The framework functions without AI; AI makes it precise, responsive, and scalable.</strong></div>
+      </div>
+    </section>
+
+    <!-- CONNECT -->
+    <section id="connect">
+      <h2>Connect</h2>
+      <div class="lead">Open-access framework, community-governed</div>
+      <div class="connect">
+        <div class="person">
+          <div class="n">Arjun Shrivatsan</div>
+          <div class="r">Graduate Researcher &amp; AI Solutions Architect</div>
+          <div class="u">Northeastern University · Applied Machine Intelligence</div>
+        </div>
+        <div class="person">
+          <div class="n">C. Dinesh Kumar Chandrasekaran</div>
+          <div class="r">Associate Professor &amp; Co-Author</div>
+          <div class="u">RV University · Architecture, Design &amp; Systems Thinking</div>
+        </div>
+      </div>
+      <p>Developed through collaboration between Northeastern University, RV University, and <strong>Innocence Theory</strong>, grounded in field engagement at the human–wildlife interface in India. Intended for consortium-maintained deployment — funded and governed collectively by the organisations that use it.</p>
+      <div class="links">
+        <a href="https://observiumai.vercel.app" target="_blank" rel="noopener noreferrer">🌐 observiumai.vercel.app</a>
+        <a href="https://innocencetheory.com" target="_blank" rel="noopener noreferrer">🎙️ Innocence Theory</a>
+        <a href="mailto:gurumurthy.ar@northeastern.edu">📧 Contact the authors</a>
+        <a href="/">▶ Open the interactive demo</a>
+      </div>
+      <p style="font-size:13px;color:var(--dim);margin-top:18px">Cite: Shrivatsan, A., &amp; Kumar Chandrasekaran, C. D. (2026). <em>AI-Enabled Transdisciplinary Observability Framework for Biodiversity and Human-Environment Systems.</em> OBSERVIUM·AI v1.0. To be presented at the World Biodiversity Forum 2026, Davos.</p>
+    </section>
+
+    <footer>
+      OBSERVIUM·AI v1.0 · Community Documentation &nbsp;·&nbsp; Licensed under Creative Commons Attribution 4.0 International<br />
+      © 2026 Arjun Shrivatsan &amp; C. Dinesh Kumar Chandrasekaran. &nbsp; Full reference: <code>docs/OBSERVIUM_AI_Community_Wiki_v1.0.md</code>
+    </footer>
+  </main>
+</div>
+</body>
+</html>

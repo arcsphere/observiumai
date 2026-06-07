@@ -3,16 +3,22 @@ import Tab1LiveFeed from "./tabs/Tab1LiveFeed.jsx";
 import Tab2Composition from "./tabs/Tab2Composition.jsx";
 import Tab3Compound from "./tabs/Tab3Compound.jsx";
 import Tab4Routing from "./tabs/Tab4Routing.jsx";
+import Tab7Stakeholders from "./tabs/Tab7Stakeholders.jsx";
 import Tab5Pipeline from "./tabs/Tab5Pipeline.jsx";
 import Tab6Triggers from "./tabs/Tab6Triggers.jsx";
 import PitchDeck from "./tabs/PitchDeck.jsx";
 import AboutPage from "./tabs/AboutPage.jsx";
+
+// Docs live as a separate, shareable static page (public/docs.html) — not bundled
+// into the app model. Deploys to its own URL, e.g. /docs.html.
+const DOCS_URL = "/docs.html";
 
 const TABS = [
   { key: "feed", label: "Live Feed", icon: "📡", color: "#f59e0b" },
   { key: "compose", label: "Composition", icon: "👁️", color: "#3b82f6" },
   { key: "compound", label: "Compound", icon: "⚗️", color: "#ec4899" },
   { key: "routing", label: "Routing", icon: "🏛️", color: "#f43f5e" },
+  { key: "stakeholders", label: "Stakeholders", icon: "🗺️", color: "#14b8a6" },
   { key: "pipeline", label: "Pipeline", icon: "🔄", color: "#22c55e" },
   { key: "triggers", label: "Triggers", icon: "⚡", color: "#facc15" },
 ];
@@ -22,6 +28,7 @@ const TAB_COMPONENTS = {
   compose: Tab2Composition,
   compound: Tab3Compound,
   routing: Tab4Routing,
+  stakeholders: Tab7Stakeholders,
   pipeline: Tab5Pipeline,
   triggers: Tab6Triggers,
 };
@@ -109,6 +116,31 @@ export default function App() {
             </button>
           ))}
         </div>
+
+        {/* Docs Link — opens the separate, shareable docs page in a new tab */}
+        <a
+          href={DOCS_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            padding: "6px 14px",
+            borderRadius: 6,
+            border: "1px solid #38bdf8",
+            background: "#38bdf815",
+            color: "#38bdf8",
+            fontSize: 11,
+            fontWeight: 600,
+            cursor: "pointer",
+            fontFamily: "inherit",
+            whiteSpace: "nowrap",
+            marginLeft: 8,
+            textDecoration: "none",
+            display: "inline-flex",
+            alignItems: "center",
+          }}
+        >
+          📚 Docs ↗
+        </a>
 
         {/* Pitch Deck Button */}
         <button
