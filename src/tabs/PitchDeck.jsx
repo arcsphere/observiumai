@@ -10,13 +10,19 @@ const Counter = ({ end, duration = 2000 }) => {
 
 const WBF = ({ size = "sm" }) => {
   const lg = size === "lg";
-  return (
-    <div style={{ display: "inline-flex", alignItems: "center", gap: lg ? 10 : 8, padding: lg ? "10px 18px" : "6px 14px", borderRadius: 8, background: "linear-gradient(135deg, #f59e0b12, #22c55e12)", border: "1px solid #f59e0b33" }}>
-      <span style={{ fontSize: lg ? 22 : 15 }}>🌍</span>
+  const badge = (href, icon, title, sub, color) => (
+    <a href={href} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: lg ? 10 : 8, padding: lg ? "10px 18px" : "6px 14px", borderRadius: 8, background: `linear-gradient(135deg, ${color}12, #22c55e12)`, border: `1px solid ${color}33`, textDecoration: "none" }}>
+      <span style={{ fontSize: lg ? 22 : 15 }}>{icon}</span>
       <div>
-        <div style={{ fontSize: lg ? 13 : 11, fontWeight: 700, color: "#f59e0b" }}>World Biodiversity Forum 2026</div>
-        <div style={{ fontSize: lg ? 11 : 9, color: "#94a3b8" }}>Davos, Switzerland — Oral Presentation</div>
+        <div style={{ fontSize: lg ? 13 : 11, fontWeight: 700, color }}>{title}</div>
+        <div style={{ fontSize: lg ? 11 : 9, color: "#94a3b8" }}>{sub}</div>
       </div>
+    </a>
+  );
+  return (
+    <div style={{ display: "inline-flex", gap: 10, flexWrap: "wrap", justifyContent: "center" }}>
+      {badge("https://worldbiodiversityforum.org/", "🌍", "World Biodiversity Forum 2026", "Davos, Switzerland — Oral Presentation", "#f59e0b")}
+      {badge("https://aessconference.org/", "🎓", "AESS 2026", "Annual Conference", "#22c55e")}
     </div>
   );
 };
@@ -44,7 +50,7 @@ const SLIDES = [
           An AI-enabled transdisciplinary observability framework<br />for biodiversity and human-environment systems
         </div>
         <div style={{ marginTop: 24, opacity: a?1:0, transition: "opacity 0.8s ease 1.2s" }}><WBF size="lg" /></div>
-        <div style={{ marginTop: 16, fontSize: 12, color: "#475569", opacity: a?1:0, transition: "opacity 0.8s ease 1.5s" }}>Arjun Shrivatsan, Northeastern University &nbsp;•&nbsp; C. Dinesh Kumar, RV University</div>
+        <div style={{ marginTop: 16, fontSize: 12, color: "#475569", opacity: a?1:0, transition: "opacity 0.8s ease 1.5s" }}>Arjun Shrivatsan, Northeastern University &nbsp;•&nbsp; Dinesh Kumar Chandrasekaran, RV University</div>
       </div>
     ),
   },
@@ -365,7 +371,7 @@ const SLIDES = [
           <div style={{ padding: "10px 20px", borderRadius: 8, background: "#3b82f622", border: "1px solid #3b82f644", color: "#3b82f6", fontSize: 13, fontWeight: 600 }}>📄 WBF 2026 Paper</div>
         </div>
         <div style={{ marginTop: 20, fontSize: 12, color: "#475569", opacity: a?1:0, transition: "opacity 0.8s ease 2.2s" }}>
-          Arjun Shrivatsan &nbsp;•&nbsp; gurumurthy.ar@northeastern.edu &nbsp;•&nbsp; C. Dinesh Kumar, RV University
+          Arjun Shrivatsan &nbsp;•&nbsp; gurumurthy.ar@northeastern.edu &nbsp;•&nbsp; Dinesh Kumar Chandrasekaran, RV University
         </div>
       </div>
     ),

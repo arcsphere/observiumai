@@ -21,10 +21,10 @@ At heart, Arjun is interested in what happens when intelligence, creativity, and
 };
 
 const DINESH = {
-  name: "C. Dinesh Kumar",
-  role: "Associate Professor & Co-Author",
+  name: "Dinesh Kumar Chandrasekaran",
+  role: "Associate Professor and Head of Transdisciplinary Contexts Program",
   university: "RV University",
-  bio: `C. Dinesh Kumar is an Associate Professor at RV University with a background in architecture, product design, and systems thinking. His work sits at the intersection of design, education, and human-centered inquiry, with a strong ability to connect abstract ideas to practical action.
+  bio: `Dinesh Kumar Chandrasekaran is an Associate Professor and Head of the Transdisciplinary Contexts Program at RV University, with a background in architecture, product design, and systems thinking. His work sits at the intersection of design, education, and human-centered inquiry, with a strong ability to connect abstract ideas to practical action.
 
 As co-host of Innocence Theory, Dinesh brings grounding, depth, and a thoughtful design lens to conversations that range from ethics and technology to learning and society. He has a natural instinct for turning complex subjects into reflective, accessible dialogue without draining them of their richness.
 
@@ -40,7 +40,7 @@ const INNOCENCE_THEORY = {
 const LINKS = {
   arjunLinkedin: "https://linkedin.com/in/arjunshrivatsan",
   innocenceTheory: "https://innocencetheory.com",
-  paper: "https://wbf2026.org",
+  paper: "https://doi.org/10.5194/wbf2026-527",
 };
 // ═══════════════════════════════════════════════
 
@@ -80,25 +80,31 @@ function Avatar({ name, photo, size = 150 }) {
   );
 }
 
-function WBFBadge({ size = "normal" }) {
-  const isLg = size === "large";
+function ConfBadge({ href, icon, title, sub, color, isLg }) {
   return (
-    <div style={{
+    <a href={href} target="_blank" rel="noopener noreferrer" style={{
       display: "inline-flex", alignItems: "center", gap: isLg ? 12 : 8,
       padding: isLg ? "12px 20px" : "8px 14px",
       borderRadius: 8,
-      background: "linear-gradient(135deg, #f59e0b12, #22c55e12)",
-      border: "1px solid #f59e0b33",
+      background: `linear-gradient(135deg, ${color}12, #22c55e12)`,
+      border: `1px solid ${color}33`,
+      textDecoration: "none",
     }}>
-      <span style={{ fontSize: isLg ? 24 : 16 }}>🌍</span>
+      <span style={{ fontSize: isLg ? 24 : 16 }}>{icon}</span>
       <div>
-        <div style={{ fontSize: isLg ? 14 : 11, fontWeight: 700, color: "#f59e0b" }}>
-          World Biodiversity Forum 2026
-        </div>
-        <div style={{ fontSize: isLg ? 12 : 10, color: "#94a3b8" }}>
-          Davos, Switzerland — Oral Presentation
-        </div>
+        <div style={{ fontSize: isLg ? 14 : 11, fontWeight: 700, color }}>{title}</div>
+        <div style={{ fontSize: isLg ? 12 : 10, color: "#94a3b8" }}>{sub}</div>
       </div>
+    </a>
+  );
+}
+
+function WBFBadge({ size = "normal" }) {
+  const isLg = size === "large";
+  return (
+    <div style={{ display: "inline-flex", gap: 10, flexWrap: "wrap", justifyContent: "center" }}>
+      <ConfBadge href="https://worldbiodiversityforum.org/" icon="🌍" title="World Biodiversity Forum 2026" sub="Davos, Switzerland — Oral Presentation" color="#f59e0b" isLg={isLg} />
+      <ConfBadge href="https://aessconference.org/" icon="🎓" title="AESS 2026" sub="Annual Conference" color="#22c55e" isLg={isLg} />
     </div>
   );
 }
@@ -244,8 +250,9 @@ export default function AboutPage({ onExit }) {
 
         {/* Footer */}
         <div style={{ paddingTop: 16, borderTop: "1px solid #1e293b", textAlign: "center", fontSize: 10, color: "#334155", opacity: anim ? 1 : 0, transition: "opacity 0.8s ease 1.5s" }}>
-          Northeastern University Sustainability Week 2026 &nbsp;•&nbsp; World Biodiversity Forum 2026, Davos
+          Northeastern University Sustainability Week 2026 &nbsp;•&nbsp; World Biodiversity Forum 2026, Davos &nbsp;•&nbsp; AESS 2026
           <br />Built with purpose. Grounded in field reality. Designed for the people who need it most.
+          <br /><span style={{ color: "#475569", fontSize: 9 }}>Gurumurthy, A. S. and Chandrasekaran, D. K.: AI-Enabled Transdisciplinary Observability Framework for Biodiversity and Human Environment Systems, World Biodiversity Forum 2026, Davos, Switzerland, 14–19 Jun 2026, WBF2026-527, https://doi.org/10.5194/wbf2026-527, 2026.</span>
         </div>
       </div>
     </div>

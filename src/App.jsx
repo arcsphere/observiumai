@@ -81,7 +81,7 @@ export default function App() {
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
           }}>
-            OBSERVABILITY
+            ObserviumAI
           </span>
           <div style={{ fontSize: 8, color: "#475569", letterSpacing: "0.1em" }}>
             FRAMEWORK v0.1
