@@ -22,9 +22,9 @@ At heart, Arjun is interested in what happens when intelligence, creativity, and
 
 const DINESH = {
   name: "Dinesh Kumar Chandrasekaran",
-  role: "Associate Professor and Head of Transdisciplinary Contexts Program",
+  role: "Associate Professor and Head of Centre of Design Values and Public Imagination",
   university: "RV University",
-  bio: `Dinesh Kumar Chandrasekaran is an Associate Professor and Head of the Transdisciplinary Contexts Program at RV University, with a background in architecture, product design, and systems thinking. His work sits at the intersection of design, education, and human-centered inquiry, with a strong ability to connect abstract ideas to practical action.
+  bio: `Dinesh Kumar Chandrasekaran is an Associate Professor and Head of the Centre of Design Values and Public Imagination at RV University, with a background in architecture, product design, and systems thinking. His work sits at the intersection of design, education, and human-centered inquiry, with a strong ability to connect abstract ideas to practical action.
 
 As co-host of Innocence Theory, Dinesh brings grounding, depth, and a thoughtful design lens to conversations that range from ethics and technology to learning and society. He has a natural instinct for turning complex subjects into reflective, accessible dialogue without draining them of their richness.
 
