@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { Icon } from "../icons.jsx";
 
 // ═══════════════════════════════════════════════
-// ✏️ CONFIGURE STATS BAR LABELS & MAP HERE
+// CONFIGURE STATS BAR LABELS & MAP HERE
 // ═══════════════════════════════════════════════
 const MAP_CENTER = [13.12, 77.57];
 const MAP_ZOOM = 13;
@@ -12,7 +13,7 @@ const MAP_TILE = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
 // ═══════════════════════════════════════════════
 
 const MODALITY_ICONS = {
-  voice: "🎙️", image: "📷", video: "🎥", sensor: "📡", text: "📝", social: "📱"
+  voice: "voice", image: "image", video: "video", sensor: "sensor", text: "text", social: "social"
 };
 const MODALITY_COLORS = {
   voice: "#f59e0b", image: "#3b82f6", video: "#8b5cf6", sensor: "#10b981", text: "#6b7280", social: "#ec4899"
@@ -116,7 +117,7 @@ function LiveMap({ pulses, selectedId, onSelect }) {
       // Popup content
       marker.bindPopup(
         `<div style="font-family:Inter,system-ui;font-size:12px;min-width:200px;color:#1e293b">
-          <div style="font-weight:700;margin-bottom:4px">${p.id} — ${MODALITY_ICONS[p.modality]} ${p.modality}</div>
+          <div style="font-weight:700;margin-bottom:4px">${p.id} — ${p.modality}</div>
           <div style="margin-bottom:6px;line-height:1.4">${p.summary}</div>
           <div style="font-size:10px;color:#64748b">
             <div>Observer: ${p.observer}</div>
@@ -184,7 +185,7 @@ export default function LiveFieldFeed() {
 
   const isNew = (p) => Date.now() - p.arrivedAt < 4000;
 
-  // ✏️ CONFIGURE STATS BAR
+  // CONFIGURE STATS BAR
   const STATS_BAR = [
     { label: "PULSES CAPTURED", color: "#60a5fa", value: pulses.length },
     { label: "INPUT MODALITIES", color: "#f59e0b", value: `${[...new Set(pulses.map(p => p.modality))].length}/6` },
@@ -207,8 +208,8 @@ export default function LiveFieldFeed() {
           {[1, 2, 4].map(s => (
             <button key={s} onClick={() => setSpeed(s)} style={{ padding: "4px 10px", borderRadius: 4, border: "1px solid", borderColor: speed === s ? "#3b82f6" : "#334155", background: speed === s ? "#1e3a5f" : "transparent", color: speed === s ? "#60a5fa" : "#94a3b8", fontSize: 11, cursor: "pointer", fontFamily: "inherit" }}>{s}×</button>
           ))}
-          <button onClick={() => setIsRunning(!isRunning)} style={{ padding: "4px 14px", borderRadius: 4, border: "1px solid #334155", background: isRunning ? "#1c1917" : "#14532d", color: isRunning ? "#fbbf24" : "#4ade80", fontSize: 11, cursor: "pointer", marginLeft: 8, fontFamily: "inherit" }}>
-            {isRunning ? "⏸ PAUSE" : "▶ RESUME"}
+          <button onClick={() => setIsRunning(!isRunning)} style={{ padding: "4px 14px", borderRadius: 4, border: "1px solid #334155", background: isRunning ? "#1c1917" : "#14532d", color: isRunning ? "#fbbf24" : "#4ade80", fontSize: 11, cursor: "pointer", marginLeft: 8, fontFamily: "inherit", display: "inline-flex", alignItems: "center", gap: 5 }}>
+            {isRunning ? <><Icon name="pause" size={12} /> PAUSE</> : <><Icon name="play" size={12} /> RESUME</>}
           </button>
         </div>
       </div>
@@ -260,7 +261,7 @@ export default function LiveFieldFeed() {
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6, fontSize: 11 }}>
                 <div><span style={{ color: "#64748b" }}>Observer: </span><span style={{ color: "#cbd5e1" }}>{selectedPulse.observer}</span></div>
                 <div><span style={{ color: "#64748b" }}>Locale: </span><span style={{ color: "#cbd5e1" }}>{selectedPulse.locale}</span></div>
-                <div><span style={{ color: "#64748b" }}>Modality: </span><span style={{ color: MODALITY_COLORS[selectedPulse.modality] }}>{MODALITY_ICONS[selectedPulse.modality]} {selectedPulse.modality}</span></div>
+                <div><span style={{ color: "#64748b" }}>Modality: </span><span style={{ color: MODALITY_COLORS[selectedPulse.modality], display: "inline-flex", alignItems: "center", gap: 4, verticalAlign: "middle" }}><Icon name={MODALITY_ICONS[selectedPulse.modality]} size={12} /> {selectedPulse.modality}</span></div>
                 <div><span style={{ color: "#64748b" }}>Confidence: </span><span style={{ color: selectedPulse.confidence > 0.85 ? "#4ade80" : selectedPulse.confidence > 0.7 ? "#fbbf24" : "#f87171" }}>{(selectedPulse.confidence * 100).toFixed(0)}%</span></div>
                 <div><span style={{ color: "#64748b" }}>GPS: </span><span style={{ color: "#cbd5e1", fontFamily: "monospace" }}>{selectedPulse.lat}°N, {selectedPulse.lng}°E</span></div>
               </div>
@@ -280,7 +281,7 @@ export default function LiveFieldFeed() {
                 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                    <span style={{ fontSize: 16 }}>{MODALITY_ICONS[p.modality]}</span>
+                    <Icon name={MODALITY_ICONS[p.modality]} size={16} color={MODALITY_COLORS[p.modality]} />
                     <span style={{ fontFamily: "monospace", fontSize: 11, color: "#60a5fa" }}>{p.id}</span>
                     <span style={{ fontSize: 10, padding: "1px 6px", borderRadius: 3, background: DOMAIN_COLORS[p.domain] + "22", color: DOMAIN_COLORS[p.domain] }}>{p.domain}</span>
                   </div>
@@ -291,7 +292,7 @@ export default function LiveFieldFeed() {
             ))}
             {pulses.length === 0 && (
               <div style={{ padding: 40, textAlign: "center", color: "#334155" }}>
-                <div style={{ fontSize: 32, marginBottom: 8 }}>📡</div>
+                <div style={{ marginBottom: 8 }}><Icon name="feed" size={32} color="#334155" /></div>
                 <div style={{ fontSize: 12 }}>Awaiting field transmissions...</div>
               </div>
             )}

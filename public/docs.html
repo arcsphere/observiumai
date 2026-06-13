@@ -10,7 +10,7 @@
     This file is intentionally self-contained (no build step, no app bundle).
     It lives in /public so it deploys to its own URL, e.g. /docs.html.
     Content is curated from docs/OBSERVIUM_AI_Community_Wiki_v1.0.md.
-    ✏️ Edit copy directly below. Drop diagram images in /public and reference them.
+    Edit copy directly below. Drop diagram images in /public and reference them.
   -->
   <style>
     :root{
@@ -124,9 +124,14 @@
       section{padding:32px 22px}.twocol{grid-template-columns:1fr}
     }
     ::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:#334155;border-radius:4px}
+
+    /* inline icon sprite */
+    .ic{width:1em;height:1em;display:inline-block;vertical-align:-0.14em;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+    .ic.dot{stroke:none;fill:currentColor;width:0.7em;height:0.7em}
   </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-book" viewBox="0 0 24 24"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></symbol><symbol id="i-architecture" viewBox="0 0 24 24"><path d="M10 12h4"></path><path d="M10 8h4"></path><path d="M14 21v-3a2 2 0 0 0-4 0v3"></path><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"></path><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"></path></symbol><symbol id="i-protocol" viewBox="0 0 24 24"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"></path><path d="m14.5 12.5 2-2"></path><path d="m11.5 9.5 2-2"></path><path d="m8.5 6.5 2-2"></path><path d="m17.5 15.5 2-2"></path></symbol><symbol id="i-features" viewBox="0 0 24 24"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></symbol><symbol id="i-connect" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></symbol><symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></symbol><symbol id="i-grad" viewBox="0 0 24 24"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path><path d="M22 10v6"></path><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path></symbol><symbol id="i-model" viewBox="0 0 24 24"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z"></path></symbol><symbol id="i-warning" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></symbol><symbol id="i-settings" viewBox="0 0 24 24"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></symbol><symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 19v3"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><rect x="9" y="2" width="6" height="13" rx="3"></rect></symbol><symbol id="i-signal" viewBox="0 0 24 24"><path d="M2 20h.01"></path><path d="M7 20v-4"></path><path d="M12 20v-8"></path><path d="M17 20V8"></path><path d="M22 4v16"></path></symbol><symbol id="i-tag" viewBox="0 0 24 24"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"></path><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"></circle></symbol><symbol id="i-flask" viewBox="0 0 24 24"><path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2"></path><path d="M6.453 15h11.094"></path><path d="M8.5 2h7"></path></symbol><symbol id="i-map" viewBox="0 0 24 24"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"></path><path d="M15 5.764v15"></path><path d="M9 3.236v15"></path></symbol><symbol id="i-handshake" viewBox="0 0 24 24"><path d="m11 17 2 2a1 1 0 1 0 3-3"></path><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"></path><path d="m21 3 1 11h-2"></path><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"></path><path d="M3 4h8"></path></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></symbol><symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></symbol><symbol id="i-mail" viewBox="0 0 24 24"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></symbol><symbol id="i-dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle></symbol></svg>
 <div class="wrap">
   <!-- Sidebar -->
   <nav class="side">
@@ -134,11 +139,11 @@
       <div class="logo">OBSERVIUM·AI</div>
       <div class="sub">DOCUMENTATION · v1.0</div>
     </div>
-    <a class="link" href="#background">📖&nbsp;&nbsp;Background</a>
-    <a class="link" href="#architecture">🏗️&nbsp;&nbsp;Architecture</a>
-    <a class="link" href="#protocol">📐&nbsp;&nbsp;Protocol</a>
-    <a class="link" href="#features">✨&nbsp;&nbsp;Features</a>
-    <a class="link" href="#connect">🔗&nbsp;&nbsp;Connect</a>
+    <a class="link" href="#background"><svg class="ic"><use href="#i-book"/></svg>&nbsp;&nbsp;Background</a>
+    <a class="link" href="#architecture"><svg class="ic"><use href="#i-architecture"/></svg>&nbsp;&nbsp;Architecture</a>
+    <a class="link" href="#protocol"><svg class="ic"><use href="#i-protocol"/></svg>&nbsp;&nbsp;Protocol</a>
+    <a class="link" href="#features"><svg class="ic"><use href="#i-features"/></svg>&nbsp;&nbsp;Features</a>
+    <a class="link" href="#connect"><svg class="ic"><use href="#i-connect"/></svg>&nbsp;&nbsp;Connect</a>
     <div class="back"><a href="/">← Back to the demo</a></div>
   </nav>
 
@@ -146,15 +151,15 @@
     <!-- Hero -->
     <header class="hero">
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
-        <a class="badge" href="https://worldbiodiversityforum.org/" target="_blank" rel="noopener noreferrer" style="margin:0;text-decoration:none">🌍 World Biodiversity Forum 2026 — Davos ↗</a>
-        <a class="badge" href="https://aessconference.org/" target="_blank" rel="noopener noreferrer" style="margin:0;text-decoration:none;color:var(--green);border-color:#22c55e33;background:linear-gradient(135deg,#22c55e12,#3b82f612)">🎓 AESS 2026 ↗</a>
+        <a class="badge" href="https://worldbiodiversityforum.org/" target="_blank" rel="noopener noreferrer" style="margin:0;text-decoration:none"><svg class="ic"><use href="#i-globe"/></svg> World Biodiversity Forum 2026 — Davos ↗</a>
+        <a class="badge" href="https://aessconference.org/" target="_blank" rel="noopener noreferrer" style="margin:0;text-decoration:none;color:var(--green);border-color:#22c55e33;background:linear-gradient(135deg,#22c55e12,#3b82f612)"><svg class="ic"><use href="#i-grad"/></svg> AESS 2026 ↗</a>
       </div>
       <h1>OBSERVIUM·AI</h1>
       <p class="tag">A model, a reference architecture, and a protocol for <strong>integrated transdisciplinary observability</strong> — detecting compound risks that emerge between institutional and disciplinary boundaries, not within any single one.</p>
       <div class="pillars">
-        <span>🧩 Systems Model</span>
-        <span>🏗️ Reference Architecture</span>
-        <span>📐 Recommended Protocol</span>
+        <span><svg class="ic"><use href="#i-model"/></svg> Systems Model</span>
+        <span><svg class="ic"><use href="#i-architecture"/></svg> Reference Architecture</span>
+        <span><svg class="ic"><use href="#i-protocol"/></svg> Recommended Protocol</span>
       </div>
     </header>
 
@@ -166,7 +171,7 @@
       <p>The forest department doesn't know. The agricultural officer doesn't know. The panchayat lead doesn't know. The researcher whose species-distribution model predicted exactly this risk zone doesn't know. <strong>This is not a data-collection failure — it is an architectural one.</strong> The systems that exist were designed to answer single questions within single mandates. None was designed to ask what one incident means across every domain it touches at once.</p>
 
       <div class="callout">
-        <div class="t">⚠️ What this costs</div>
+        <div class="t"><svg class="ic"><use href="#i-warning"/></svg> What this costs</div>
         <div class="x">India loses an estimated <strong>58,000 people to snakebite every year</strong>. 94% of those deaths are rural; 77% happen outside health facilities. Official surveillance captures roughly <strong>10%</strong> of expected hospital deaths — before counting the majority that never reach a facility at all. The ecological and agricultural signals that predict this risk with ~76% accuracy already exist. What's missing is a protocol that connects them at the moment a bite occurs.</div>
       </div>
 
@@ -203,15 +208,15 @@
       <h3>The three pillars</h3>
       <div class="grid">
         <div class="card pill-green">
-          <div class="h">🟢 Frontline Capture</div>
+          <div class="h"><svg class="ic dot" style="color:#22c55e"><use href="#i-dot"/></svg> Frontline Capture</div>
           <p><strong>Nodes 1–4.</strong> Any input, any modality, any observer — voice, image, sensor, text, and Indigenous &amp; Local Knowledge (ILK) as a first-class modality. Offline-first store-and-forward, raw preservation, five-level redundancy.</p>
         </div>
         <div class="card pill-amber">
-          <div class="h">🟠 Midline Synthesis</div>
+          <div class="h"><svg class="ic dot" style="color:#f59e0b"><use href="#i-dot"/></svg> Midline Synthesis</div>
           <p><strong>Nodes 5–6.</strong> Where cross-domain intelligence is created: three-dimensional Compound binding, a configurable Systemic Factor Registry, cross-domain deduplication, escalation algebra, and Risk Window Mode.</p>
         </div>
         <div class="card pill-red">
-          <div class="h">🔴 Backline Decision-Making</div>
+          <div class="h"><svg class="ic dot" style="color:#ef4444"><use href="#i-dot"/></svg> Backline Decision-Making</div>
           <p><strong>Nodes 7–8.</strong> Five-layer stakeholder routing, RAG-based intelligence synthesis, span-level governance (SHACL over JSON-LD), outcome tracking, and the adaptive calibration feed.</p>
         </div>
       </div>
@@ -241,7 +246,7 @@
       <h3>The governance boundary — hardcoded vs configurable</h3>
       <div class="twocol">
         <div class="box locked">
-          <div class="h">🔒 Hardcoded (non-overridable)</div>
+          <div class="h"><svg class="ic"><use href="#i-lock"/></svg> Hardcoded (non-overridable)</div>
           <ul>
             <li>IHR 2005 notification obligations (Annex 2 criteria)</li>
             <li>CBD Article 26 biodiversity reporting</li>
@@ -251,7 +256,7 @@
           </ul>
         </div>
         <div class="box cfg">
-          <div class="h">⚙️ Configurable (per deployment)</div>
+          <div class="h"><svg class="ic"><use href="#i-settings"/></svg> Configurable (per deployment)</div>
           <ul>
             <li>Domain taxonomy &amp; Systemic Factor Registry</li>
             <li>Spatial / temporal binding windows</li>
@@ -283,15 +288,15 @@
         <figcaption>The six defining characteristics — frontline multimodal input, cross-domain pattern recognition, a transdisciplinary relay hierarchy, a live stakeholder map with RACI, stakeholder discovery &amp; community, and open architecture — with the AI/tech layer that powers each.</figcaption>
       </figure>
       <div class="grid">
-        <div class="card"><div class="h">🎙️ Multimodal capture</div><p>Voice, image, video, sensor, text, and ILK — from any device, in any language, online or offline.</p></div>
-        <div class="card"><div class="h">📶 Offline-first redundancy</div><p>Store-and-forward queues and five-level redundancy: no incident is lost to network failure.</p></div>
-        <div class="card"><div class="h">🏷️ Multi-domain typing</div><p>One classification pass tags an incident across every domain it belongs to — transdisciplinarity at the data level.</p></div>
-        <div class="card"><div class="h">⚗️ Compound formation</div><p>Cross-domain patterns bound by spatial, temporal, and systemic-factor dimensions surface what silos miss.</p></div>
-        <div class="card"><div class="h">🗺️ Stakeholder topology</div><p>Five routing layers with defined <em>and</em> discovered stakeholders, plus RACI for the response.</p></div>
-        <div class="card"><div class="h">🤝 ILK as first-class data</div><p>Indigenous &amp; Local Knowledge enters as an equal input under CARE Principles and Local Contexts TK Labels.</p></div>
-        <div class="card"><div class="h">🔐 Span-level governance</div><p>Governance attaches to processing spans, not flat records — deterministic, auditable, and portable with the data.</p></div>
-        <div class="card"><div class="h">🕰️ Retroactive queryability</div><p>Raw preservation means old incidents can be re-analysed against new models and evidence published after capture.</p></div>
-        <div class="card"><div class="h">🔄 Learning loop</div><p>Intervention outcomes recalibrate detection thresholds and binding rules — the deployment gets more accurate over time.</p></div>
+        <div class="card"><div class="h"><svg class="ic"><use href="#i-mic"/></svg> Multimodal capture</div><p>Voice, image, video, sensor, text, and ILK — from any device, in any language, online or offline.</p></div>
+        <div class="card"><div class="h"><svg class="ic"><use href="#i-signal"/></svg> Offline-first redundancy</div><p>Store-and-forward queues and five-level redundancy: no incident is lost to network failure.</p></div>
+        <div class="card"><div class="h"><svg class="ic"><use href="#i-tag"/></svg> Multi-domain typing</div><p>One classification pass tags an incident across every domain it belongs to — transdisciplinarity at the data level.</p></div>
+        <div class="card"><div class="h"><svg class="ic"><use href="#i-flask"/></svg> Compound formation</div><p>Cross-domain patterns bound by spatial, temporal, and systemic-factor dimensions surface what silos miss.</p></div>
+        <div class="card"><div class="h"><svg class="ic"><use href="#i-map"/></svg> Stakeholder topology</div><p>Five routing layers with defined <em>and</em> discovered stakeholders, plus RACI for the response.</p></div>
+        <div class="card"><div class="h"><svg class="ic"><use href="#i-handshake"/></svg> ILK as first-class data</div><p>Indigenous &amp; Local Knowledge enters as an equal input under CARE Principles and Local Contexts TK Labels.</p></div>
+        <div class="card"><div class="h"><svg class="ic"><use href="#i-shield"/></svg> Span-level governance</div><p>Governance attaches to processing spans, not flat records — deterministic, auditable, and portable with the data.</p></div>
+        <div class="card"><div class="h"><svg class="ic"><use href="#i-clock"/></svg> Retroactive queryability</div><p>Raw preservation means old incidents can be re-analysed against new models and evidence published after capture.</p></div>
+        <div class="card"><div class="h"><svg class="ic"><use href="#i-refresh"/></svg> Learning loop</div><p>Intervention outcomes recalibrate detection thresholds and binding rules — the deployment gets more accurate over time.</p></div>
       </div>
       <div class="callout g">
         <div class="t">AI as an operational nervous regulator</div>
@@ -317,9 +322,9 @@
       </div>
       <p>Developed through collaboration between Northeastern University, RV University, and <strong>Innocence Theory</strong>, grounded in field engagement at the human–wildlife interface in India. Intended for consortium-maintained deployment — funded and governed collectively by the organisations that use it.</p>
       <div class="links">
-        <a href="https://observiumai.vercel.app" target="_blank" rel="noopener noreferrer">🌐 observiumai.vercel.app</a>
-        <a href="https://innocencetheory.com" target="_blank" rel="noopener noreferrer">🎙️ Innocence Theory</a>
-        <a href="mailto:gurumurthy.ar@northeastern.edu">📧 Contact the authors</a>
+        <a href="https://observiumai.vercel.app" target="_blank" rel="noopener noreferrer"><svg class="ic"><use href="#i-globe"/></svg> observiumai.vercel.app</a>
+        <a href="https://innocencetheory.com" target="_blank" rel="noopener noreferrer"><svg class="ic"><use href="#i-mic"/></svg> Innocence Theory</a>
+        <a href="mailto:gurumurthy.ar@northeastern.edu"><svg class="ic"><use href="#i-mail"/></svg> Contact the authors</a>
         <a href="/">▶ Open the interactive demo</a>
       </div>
       <p style="font-size:13px;color:var(--dim);margin-top:18px">Cite: Gurumurthy, A. S. and Chandrasekaran, D. K.: <em>AI-Enabled Transdisciplinary Observability Framework for Biodiversity and Human Environment Systems,</em> World Biodiversity Forum 2026, Davos, Switzerland, 14–19 Jun 2026, WBF2026-527, <a href="https://doi.org/10.5194/wbf2026-527" target="_blank" rel="noopener noreferrer">https://doi.org/10.5194/wbf2026-527</a>, 2026.</p>

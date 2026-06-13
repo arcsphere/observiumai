@@ -1,44 +1,45 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { Icon } from "../icons.jsx";
 
 // ═══════════════════════════════════════════════
-// ✏️ CONFIGURE PIPELINE STAGES HERE
+// CONFIGURE PIPELINE STAGES HERE
 // ═══════════════════════════════════════════════
 const PIPELINE_STAGES = [
-  { key: "capture", label: "Capture", subtitle: "Frontline Adapters", icon: "📡", color: "#f59e0b",
+  { key: "capture", label: "Capture", subtitle: "Frontline Adapters", icon: "capture", color: "#f59e0b",
     description: "Multimodal field intake: voice, image, video, sensor, text, social media. Raw signals from farmers, ASHA workers, truck drivers, IoT grids, camera traps, social posts.",
     techNote: "On-device inference, language understanding, lightweight image models. No rigid forms — spoken and visual reports transformed into structured fields.",
   },
-  { key: "cleanse", label: "Cleanse", subtitle: "Quality & De-duplication", icon: "🧹", color: "#6b7280",
+  { key: "cleanse", label: "Cleanse", subtitle: "Quality & De-duplication", icon: "cleanse", color: "#6b7280",
     description: "Raw signals assessed for quality, duplicates identified, conflicting reports flagged. Not cleaned silently — quality tags travel with the data forever.",
     techNote: "De-duplication ladder operates at every level: capture, transmission, processing, routing, intelligence. Each has its own logic.",
   },
-  { key: "observe", label: "Observe", subtitle: "Multi-Scale Observation", icon: "👁️", color: "#3b82f6",
+  { key: "observe", label: "Observe", subtitle: "Multi-Scale Observation", icon: "observe", color: "#3b82f6",
     description: "Cleansed signals contextualized at appropriate geographic and institutional scales: local, zonal, district, regional. Same data, different meaning at each tier.",
     techNote: "Observations carry tier tags, institutional provenance, and quality inheritance from source incidents.",
   },
-  { key: "pattern", label: "Pattern", subtitle: "Cross-Domain Detection", icon: "🔗", color: "#a855f7",
+  { key: "pattern", label: "Pattern", subtitle: "Cross-Domain Detection", icon: "pattern", color: "#a855f7",
     description: "Observations from multiple domains and scales tested against binding rules. Temporal windows, spatial radii, domain diversity thresholds. Patterns emerge — or don't.",
     techNote: "Pattern formation is rule-bound, not arbitrary. Each pattern carries its binding criteria, tensions, and explicit gaps.",
   },
-  { key: "compound", label: "Compound", subtitle: "Cross-Scale Convergence", icon: "⚗️", color: "#ec4899",
+  { key: "compound", label: "Compound", subtitle: "Cross-Scale Convergence", icon: "compound", color: "#ec4899",
     description: "Patterns from different scales and institutions converge. The compound signal exists at no single tier and in no single agency. Requires cross-scale, cross-institutional reading.",
     techNote: "5km radius, 72-hour window, 2+ domain types, systemic factor catalysts. Binding rules are configurable per deployment.",
   },
-  { key: "insight", label: "Insight", subtitle: "Actionable Intelligence", icon: "💡", color: "#22c55e",
+  { key: "insight", label: "Insight", subtitle: "Actionable Intelligence", icon: "insight", color: "#22c55e",
     description: "Compound signals interpreted against four authority requirements: actionable intelligence, bureaucratic circumvention pathways, early warning velocity, outcome accountability.",
     techNote: "Insights carry recommendations with timelines, urgency, confidence basis, and explicit uncertainty statements.",
   },
-  { key: "route", label: "Route", subtitle: "Stakeholder Topology", icon: "🏛️", color: "#f43f5e",
+  { key: "route", label: "Route", subtitle: "Stakeholder Topology", icon: "routing", color: "#f43f5e",
     description: "Five-layer routing: Hardcoded (statutory), Regulatory (compliance), Configurable (org-designed), Informal (trust networks), Broadcast (public). Each stakeholder gets role-appropriate information packages.",
     techNote: "Routing tracks delivery status, response windows, and accountability. The gap between 'should know' and 'does know' is the framework's core diagnostic.",
   },
-  { key: "decision", label: "Decision", subtitle: "Outcome & Accountability", icon: "⚖️", color: "#facc15",
+  { key: "decision", label: "Decision", subtitle: "Outcome & Accountability", icon: "decision", color: "#facc15",
     description: "Actions taken (or not taken) are recorded. Accountability loops close — or remain open. The framework doesn't compel response, but it makes non-response visible.",
     techNote: "Outcome tracking enables retrospective analysis: which signals were acted on, which were ignored, and what happened as a result.",
   },
 ];
 
-// ✏️ CONFIGURE REDUNDANCY LAYERS
+// CONFIGURE REDUNDANCY LAYERS
 const REDUNDANCY = [
   { key: "capture", label: "Capture Redundancy", color: "#f59e0b", description: "Multiple modalities for same event. If voice fails, image persists. If sensor offline, human report fills gap.", examples: ["Voice + Image for cobra sighting", "Sensor + Manual report for soil moisture", "Camera trap + Social media for displacement"] },
   { key: "transmission", label: "Transmission Redundancy", color: "#6b7280", description: "Offline-first capture, store-and-forward, multiple relay paths. Low-connectivity environments don't lose data.", examples: ["On-device storage when offline", "SMS fallback for voice reports", "WhatsApp relay for video"] },
@@ -47,7 +48,7 @@ const REDUNDANCY = [
   { key: "intelligence", label: "Intelligence Redundancy", color: "#22c55e", description: "Multiple analytical pathways to same insight. If one pattern pathway fails, alternative composition routes exist.", examples: ["Health-first pathway: bite → stock → system stress", "Ecology-first pathway: displacement → habitat → forcing", "Climate-first pathway: drought → soil → cascade"] },
 ];
 
-// ✏️ CONFIGURE DE-DUPLICATION LADDER
+// CONFIGURE DE-DUPLICATION LADDER
 const DEDUP_LADDER = [
   { level: "Capture", rule: "Same observer, same event, <5 min → merge", color: "#f59e0b", example: "Ramesh calls twice about same bite → single incident" },
   { level: "Transmission", rule: "Same payload hash, different relay paths → deduplicate", color: "#6b7280", example: "WhatsApp + SMS relay of same video → one transmission" },
@@ -58,16 +59,16 @@ const DEDUP_LADDER = [
 
 // ── LIVE FLOW DATA ──
 const FLOW_EVENTS = [
-  { id: "F01", label: "Farmer voice: cobra bite", icon: "🎙️", domain: "health", startStage: 0, quality: "moderate" },
-  { id: "F02", label: "ASHA worker: cobra image", icon: "📷", domain: "ecology", startStage: 0, quality: "high" },
-  { id: "F03", label: "Truck driver: snake on road", icon: "🎙️", domain: "ecology", startStage: 0, quality: "low" },
-  { id: "F04", label: "IoT sensor: soil moisture crash", icon: "📡", domain: "agriculture", startStage: 0, quality: "high" },
-  { id: "F05", label: "Social: 3rd snake this week", icon: "📱", domain: "ecology", startStage: 0, quality: "unverified" },
-  { id: "F06", label: "PHC nurse: anti-venom critical", icon: "🎙️", domain: "health", startStage: 0, quality: "high" },
-  { id: "F07", label: "Construction blast video", icon: "🎥", domain: "infrastructure", startStage: 0, quality: "moderate" },
-  { id: "F08", label: "Camera trap: daytime rat snake", icon: "📷", domain: "ecology", startStage: 0, quality: "high" },
-  { id: "F09", label: "Crop damage: rodent surge", icon: "📝", domain: "agriculture", startStage: 0, quality: "high" },
-  { id: "F10", label: "IMD: 23-day drought", icon: "📡", domain: "climate", startStage: 0, quality: "high" },
+  { id: "F01", label: "Farmer voice: cobra bite", icon: "voice", domain: "health", startStage: 0, quality: "moderate" },
+  { id: "F02", label: "ASHA worker: cobra image", icon: "image", domain: "ecology", startStage: 0, quality: "high" },
+  { id: "F03", label: "Truck driver: snake on road", icon: "voice", domain: "ecology", startStage: 0, quality: "low" },
+  { id: "F04", label: "IoT sensor: soil moisture crash", icon: "sensor", domain: "agriculture", startStage: 0, quality: "high" },
+  { id: "F05", label: "Social: 3rd snake this week", icon: "social", domain: "ecology", startStage: 0, quality: "unverified" },
+  { id: "F06", label: "PHC nurse: anti-venom critical", icon: "voice", domain: "health", startStage: 0, quality: "high" },
+  { id: "F07", label: "Construction blast video", icon: "video", domain: "infrastructure", startStage: 0, quality: "moderate" },
+  { id: "F08", label: "Camera trap: daytime rat snake", icon: "image", domain: "ecology", startStage: 0, quality: "high" },
+  { id: "F09", label: "Crop damage: rodent surge", icon: "text", domain: "agriculture", startStage: 0, quality: "high" },
+  { id: "F10", label: "IMD: 23-day drought", icon: "sensor", domain: "climate", startStage: 0, quality: "high" },
 ];
 
 const DOMAIN_COLORS = { health: "#ef4444", ecology: "#22c55e", agriculture: "#f59e0b", climate: "#3b82f6", infrastructure: "#6b7280" };
@@ -143,7 +144,8 @@ export default function PipelineOverview() {
           <button onClick={startFlow} disabled={isFlowing} style={{
             padding: "5px 14px", borderRadius: 5, border: "1px solid #22c55e", background: isFlowing ? "#14532d22" : "transparent",
             color: "#22c55e", fontSize: 11, cursor: isFlowing ? "default" : "pointer", opacity: isFlowing ? 0.6 : 1, marginLeft: 8,
-          }}>{isFlowing ? "⏳ FLOWING..." : "▶ ANIMATE FLOW"}</button>
+            display: "inline-flex", alignItems: "center", gap: 5,
+          }}>{isFlowing ? <><Icon name="hourglass" size={12} /> FLOWING...</> : <><Icon name="play" size={12} /> ANIMATE FLOW</>}</button>
         </div>
       </div>
 
@@ -161,7 +163,7 @@ export default function PipelineOverview() {
                     border: `1px solid ${activeStage === s.key ? s.color : "#1e293b"}`,
                     transition: "all 0.3s",
                   }}>
-                  <div style={{ fontSize: 16 }}>{s.icon}</div>
+                  <div><Icon name={s.icon} size={18} color={s.color} /></div>
                   <div style={{ fontSize: 10, fontWeight: 700, color: s.color, marginTop: 2 }}>{s.label}</div>
                   <div style={{ fontSize: 8, color: "#475569" }}>{s.subtitle}</div>
                 </div>
@@ -184,7 +186,7 @@ export default function PipelineOverview() {
                 return (
                   <div key={e.id} style={{ display: "flex", alignItems: "center", marginBottom: 4, height: 28 }}>
                     <div style={{ width: 180, display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
-                      <span style={{ fontSize: 12 }}>{e.icon}</span>
+                      <Icon name={e.icon} size={12} color="#94a3b8" />
                       <span style={{ fontSize: 10, color: "#94a3b8", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{e.label}</span>
                     </div>
                     <div style={{ flex: 1, display: "flex", gap: 2, alignItems: "center" }}>
@@ -215,7 +217,7 @@ export default function PipelineOverview() {
             {/* Merge events */}
             {mergeEvents.length > 0 && (
               <div style={{ marginBottom: 20, padding: 14, background: "#111827", borderRadius: 8, border: "1px solid #a855f733" }}>
-                <div style={{ fontSize: 10, color: "#a855f7", letterSpacing: "0.05em", marginBottom: 8 }}>🔗 COMPOSITION EVENTS</div>
+                <div style={{ fontSize: 10, color: "#a855f7", letterSpacing: "0.05em", marginBottom: 8, display: "flex", alignItems: "center", gap: 5 }}><Icon name="pattern" size={11} color="#a855f7" /> COMPOSITION EVENTS</div>
                 {mergeEvents.map((m, i) => (
                   <div key={i} style={{
                     fontSize: 12, color: "#e2e8f0", padding: "6px 12px", marginBottom: 4,
@@ -234,7 +236,7 @@ export default function PipelineOverview() {
               return (
                 <div style={{ padding: 16, background: "#111827", borderRadius: 8, border: `1px solid ${s.color}33` }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-                    <span style={{ fontSize: 20 }}>{s.icon}</span>
+                    <Icon name={s.icon} size={20} color={s.color} />
                     <span style={{ fontSize: 16, fontWeight: 700, color: s.color }}>{s.label}</span>
                     <span style={{ fontSize: 11, color: "#64748b" }}>— {s.subtitle}</span>
                   </div>

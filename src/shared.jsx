@@ -11,13 +11,14 @@ export const DOMAIN_COLORS = {
   governance: "#a855f7",
 };
 
+// values are semantic icon names — render with <Icon name={MODALITY_ICONS[m]} />
 export const MODALITY_ICONS = {
-  voice: "🎙️",
-  image: "📷",
-  video: "🎥",
-  sensor: "📡",
-  text: "📝",
-  social: "📱",
+  voice: "voice",
+  image: "image",
+  video: "video",
+  sensor: "sensor",
+  text: "text",
+  social: "social",
 };
 
 export const MODALITY_COLORS = {

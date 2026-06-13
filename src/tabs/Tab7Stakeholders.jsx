@@ -4,6 +4,7 @@ import {
   ORIGIN_TYPES, RACI_TYPES, RACI_ORDER,
 } from "../stakeholders.js";
 import { DOMAIN_COLORS } from "../shared.jsx";
+import { Icon } from "../icons.jsx";
 
 const ALL_DOMAINS = ["health", "ecology", "agriculture", "climate", "infrastructure", "governance"];
 const layerOf = (key) => LAYERS.find(l => l.key === key);
@@ -28,7 +29,7 @@ function OriginTag({ origin }) {
       fontSize: 9, padding: "2px 7px", borderRadius: 3, fontWeight: 700, letterSpacing: "0.03em",
       background: `${o.color}18`, color: o.color, border: `1px solid ${o.color}33`,
       display: "inline-flex", alignItems: "center", gap: 4,
-    }}>{o.icon} {o.label.toUpperCase()}</span>
+    }}><Icon name={o.icon} size={10} color={o.color} /> {o.label.toUpperCase()}</span>
   );
 }
 
@@ -88,11 +89,12 @@ export default function StakeholderMap() {
         <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
           {/* View toggle */}
           <div style={{ display: "flex", border: "1px solid #1e293b", borderRadius: 6, overflow: "hidden" }}>
-            {[["categorized", "🗂️ Categorized"], ["directory", "📇 Directory"]].map(([k, label]) => (
+            {[["categorized", "categorized", "Categorized"], ["directory", "directory", "Directory"]].map(([k, ic, label]) => (
               <button key={k} onClick={() => setView(k)} style={{
                 padding: "6px 14px", border: "none", cursor: "pointer", fontSize: 11, fontWeight: 600, fontFamily: "inherit",
                 background: view === k ? "#1e293b" : "transparent", color: view === k ? "#e2e8f0" : "#64748b",
-              }}>{label}</button>
+                display: "inline-flex", alignItems: "center", gap: 5,
+              }}><Icon name={ic} size={12} /> {label}</button>
             ))}
           </div>
           <button onClick={() => setShowAdd(true)} style={{
@@ -129,7 +131,7 @@ export default function StakeholderMap() {
           <span style={{ fontSize: 9, color: "#475569", letterSpacing: "0.05em" }}>ORIGIN</span>
           {Object.values(ORIGIN_TYPES).map(o => (
             <div key={o.key} style={{ display: "flex", alignItems: "center", gap: 4 }}>
-              <span style={{ fontSize: 12 }}>{o.icon}</span>
+              <Icon name={o.icon} size={12} color={o.color} />
               <span style={{ fontSize: 12, fontWeight: 700, color: o.color, fontFamily: "monospace" }}>{originCounts[o.key]}</span>
               <span style={{ fontSize: 9, color: "#64748b" }}>{o.label}</span>
             </div>
@@ -149,7 +151,8 @@ export default function StakeholderMap() {
               padding: "4px 12px", borderRadius: 4, fontSize: 11, cursor: "pointer", fontFamily: "inherit",
               border: `1px solid ${active ? color : "#1e293b"}`, background: active ? `${color}15` : "transparent",
               color: active ? color : "#64748b",
-            }}>{o ? `${o.icon} ${o.label}` : "All"} ({k === "all" ? list.length : originCounts[k]})</button>
+              display: "inline-flex", alignItems: "center", gap: 5,
+            }}>{o ? <><Icon name={o.icon} size={11} color={active ? color : "#64748b"} /> {o.label}</> : "All"} ({k === "all" ? list.length : originCounts[k]})</button>
           );
         })}
         {view === "categorized" && (
@@ -208,8 +211,8 @@ function DirectoryView({ items, onSelect, onSetRaci }) {
 
           {/* contact lines */}
           <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 4 }}>
-            <div style={{ fontSize: 11, color: "#cbd5e1", display: "flex", gap: 6 }}><span style={{ color: "#475569" }}>👤</span>{sh.person}</div>
-            <div style={{ fontSize: 11, color: "#cbd5e1", display: "flex", gap: 6 }}><span style={{ color: "#475569" }}>📞</span>{sh.channel}</div>
+            <div style={{ fontSize: 11, color: "#cbd5e1", display: "flex", gap: 6, alignItems: "center" }}><Icon name="user" size={12} color="#475569" />{sh.person}</div>
+            <div style={{ fontSize: 11, color: "#cbd5e1", display: "flex", gap: 6, alignItems: "center" }}><Icon name="phone" size={12} color="#475569" />{sh.channel}</div>
           </div>
 
           {/* meta row */}
@@ -231,7 +234,7 @@ function CategorizedView({ items, groupBy, onSelect }) {
 
   const groups = groupBy === "domain"
     ? ALL_DOMAINS.map(d => ({
-        key: d, label: d.toUpperCase(), color: DOMAIN_COLORS[d], icon: "●",
+        key: d, label: d.toUpperCase(), color: DOMAIN_COLORS[d], icon: d,
         members: items.filter(s => s.domains.includes(d)),
       }))
     : LAYERS.map(l => ({
@@ -246,7 +249,7 @@ function CategorizedView({ items, groupBy, onSelect }) {
       {visible.map(g => (
         <div key={g.key} style={{ background: "#0f172a", border: "1px solid #1e293b", borderRadius: 8, overflow: "hidden" }}>
           <div style={{ padding: "9px 12px", borderBottom: `2px solid ${g.color}`, background: `${g.color}10`, display: "flex", alignItems: "center", gap: 6 }}>
-            <span style={{ color: g.color, fontSize: 13 }}>{g.icon}</span>
+            <Icon name={g.icon} size={13} color={g.color} />
             <span style={{ fontSize: 12, fontWeight: 700, color: g.color, letterSpacing: "0.02em" }}>{g.label}</span>
             <span style={{ fontSize: 10, color: "#475569", marginLeft: "auto", fontFamily: "monospace" }}>{g.members.length}</span>
           </div>
@@ -286,7 +289,7 @@ function DetailModal({ sh, onClose, onSetRaci }) {
     <Overlay onClose={onClose}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6, flexWrap: "wrap" }}>
         <OriginTag origin={sh.origin} />
-        <span style={{ fontSize: 9, padding: "2px 7px", borderRadius: 3, background: `${layer.color}15`, color: layer.color, border: `1px solid ${layer.color}33`, fontWeight: 600 }}>{layer.icon} {layer.label}</span>
+        <span style={{ fontSize: 9, padding: "2px 7px", borderRadius: 3, background: `${layer.color}15`, color: layer.color, border: `1px solid ${layer.color}33`, fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 4 }}><Icon name={layer.icon} size={10} color={layer.color} /> {layer.label}</span>
         <StatusBadge status={sh.status} />
       </div>
       <div style={{ fontSize: 19, fontWeight: 700, lineHeight: 1.25 }}>{sh.name}</div>
@@ -303,7 +306,7 @@ function DetailModal({ sh, onClose, onSetRaci }) {
       </div>
 
       {/* Contact */}
-      <Box title="📇 CONTACT" color="#3b82f6">
+      <Box title={<span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon name="directory" size={11} /> CONTACT</span>} color="#3b82f6">
         <div style={{ fontSize: 12, color: "#cbd5e1", lineHeight: 1.7 }}>
           <div><span style={{ color: "#475569" }}>Person: </span>{sh.person}</div>
           <div><span style={{ color: "#475569" }}>Channel: </span>{sh.channel}</div>
@@ -314,7 +317,7 @@ function DetailModal({ sh, onClose, onSetRaci }) {
       </Box>
 
       {/* Origin reasoning */}
-      <Box title={`${o.icon} WHY THIS STAKEHOLDER — ${o.label.toUpperCase()}`} color={o.color}>
+      <Box title={<span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon name={o.icon} size={11} color={o.color} /> WHY THIS STAKEHOLDER — {o.label.toUpperCase()}</span>} color={o.color}>
         <div style={{ fontSize: 12, color: "#cbd5e1", lineHeight: 1.6, fontStyle: sh.origin === "gap" ? "italic" : "normal" }}>{sh.originReason}</div>
       </Box>
 
@@ -325,7 +328,7 @@ function DetailModal({ sh, onClose, onSetRaci }) {
       </div>
 
       {/* Human context */}
-      <Box title="👤 THE PERSON BEHIND THE ROLE" color="#64748b">
+      <Box title={<span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon name="user" size={11} /> THE PERSON BEHIND THE ROLE</span>} color="#64748b">
         <div style={{ fontSize: 12, color: "#cbd5e1", lineHeight: 1.6, fontStyle: "italic" }}>{sh.humanContext}</div>
       </Box>
     </Overlay>
@@ -438,7 +441,7 @@ function Overlay({ children, onClose, title }) {
       <div onClick={(e) => e.stopPropagation()} style={{ background: "#0a0e1a", border: "1px solid #1e293b", borderRadius: 12, width: "100%", maxWidth: 560, padding: 20, boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: title ? 14 : 4 }}>
           {title ? <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.05em", color: "#e2e8f0" }}>{title}</div> : <span />}
-          <button onClick={onClose} style={{ border: "1px solid #334155", background: "#111827", color: "#94a3b8", borderRadius: 5, fontSize: 11, padding: "4px 10px", cursor: "pointer", fontFamily: "inherit" }}>✕</button>
+          <button onClick={onClose} style={{ border: "1px solid #334155", background: "#111827", color: "#94a3b8", borderRadius: 5, padding: "4px 8px", cursor: "pointer", fontFamily: "inherit", display: "inline-flex", alignItems: "center" }}><Icon name="close" size={13} /></button>
         </div>
         {children}
       </div>
@@ -468,7 +471,7 @@ function Empty() {
   return (
     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 240, color: "#334155" }}>
       <div style={{ textAlign: "center" }}>
-        <div style={{ fontSize: 36, marginBottom: 8 }}>🗺️</div>
+        <div style={{ marginBottom: 8 }}><Icon name="map" size={36} color="#334155" /></div>
         <div style={{ fontSize: 13 }}>No stakeholders match this filter</div>
       </div>
     </div>

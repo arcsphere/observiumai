@@ -1,22 +1,23 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { Icon } from "../icons.jsx";
 
 // ═══════════════════════════════════════════════
-// ✏️ CONFIGURE INFORMATION TIERS HERE
+// CONFIGURE INFORMATION TIERS HERE
 // ═══════════════════════════════════════════════
 const TIERS = [
-  { key: "local", label: "Local", subtitle: "Village / Site", icon: "📍", color: "#f59e0b", radius: "0–2 km" },
-  { key: "zonal", label: "Zonal", subtitle: "Taluk / Block", icon: "🏘️", color: "#3b82f6", radius: "2–15 km" },
-  { key: "district", label: "District", subtitle: "Ramanagara", icon: "🗺️", color: "#a855f7", radius: "15–50 km" },
-  { key: "regional", label: "Regional", subtitle: "South Karnataka", icon: "🌍", color: "#22c55e", radius: "50+ km" },
-  { key: "institutional", label: "Institutional", subtitle: "Cross-Agency", icon: "🏛️", color: "#ec4899", radius: "Org scope" },
+  { key: "local", label: "Local", subtitle: "Village / Site", icon: "location", color: "#f59e0b", radius: "0–2 km" },
+  { key: "zonal", label: "Zonal", subtitle: "Taluk / Block", icon: "zonal", color: "#3b82f6", radius: "2–15 km" },
+  { key: "district", label: "District", subtitle: "Ramanagara", icon: "district", color: "#a855f7", radius: "15–50 km" },
+  { key: "regional", label: "Regional", subtitle: "South Karnataka", icon: "globe", color: "#22c55e", radius: "50+ km" },
+  { key: "institutional", label: "Institutional", subtitle: "Cross-Agency", icon: "institution", color: "#ec4899", radius: "Org scope" },
 ];
 
-// ✏️ CONFIGURE PIPELINE STAGES HERE
+// CONFIGURE PIPELINE STAGES HERE
 const STAGES = [
-  { key: "observation", label: "Observations", icon: "👁️", color: "#3b82f6" },
-  { key: "pattern", label: "Patterns", icon: "🔗", color: "#a855f7" },
-  { key: "compound", label: "Compounds", icon: "⚗️", color: "#ec4899" },
-  { key: "insight", label: "Insights", icon: "💡", color: "#22c55e" },
+  { key: "observation", label: "Observations", icon: "observe", color: "#3b82f6" },
+  { key: "pattern", label: "Patterns", icon: "pattern", color: "#a855f7" },
+  { key: "compound", label: "Compounds", icon: "compound", color: "#ec4899" },
+  { key: "insight", label: "Insights", icon: "insight", color: "#22c55e" },
 ];
 // ═══════════════════════════════════════════════
 
@@ -115,7 +116,7 @@ const Gauge = ({ value, color, size = 36 }) => {
 const TierBadge = ({ tier }) => {
   const t = TIERS.find(t => t.key === tier);
   if (!t) return null;
-  return <span style={{ fontSize: 9, padding: "1px 7px", borderRadius: 3, background: `${t.color}15`, color: t.color, border: `1px solid ${t.color}33` }}>{t.icon} {t.label}</span>;
+  return <span style={{ fontSize: 9, padding: "1px 7px", borderRadius: 3, background: `${t.color}15`, color: t.color, border: `1px solid ${t.color}33`, display: "inline-flex", alignItems: "center", gap: 4 }}><Icon name={t.icon} size={9} color={t.color} /> {t.label}</span>;
 };
 
 export default function CompoundFormation() {
@@ -180,7 +181,8 @@ export default function CompoundFormation() {
         <button onClick={autoPlay} disabled={autoPlaying} style={{
           padding: "6px 14px", borderRadius: 6, border: "1px solid #ec4899", background: autoPlaying ? "#1a1020" : "transparent",
           color: "#ec4899", fontSize: 11, cursor: autoPlaying ? "default" : "pointer", opacity: autoPlaying ? 0.5 : 1,
-        }}>{autoPlaying ? "⏳ FORMING..." : "▶ AUTO-COMPOUND"}</button>
+          display: "inline-flex", alignItems: "center", gap: 5,
+        }}>{autoPlaying ? <><Icon name="hourglass" size={12} /> FORMING...</> : <><Icon name="play" size={12} /> AUTO-COMPOUND</>}</button>
       </div>
 
       {/* Tier Selector */}
@@ -197,7 +199,7 @@ export default function CompoundFormation() {
             background: tierFilter === t.key ? `${t.color}15` : "transparent", color: tierFilter === t.key ? t.color : "#64748b",
             fontSize: 11, cursor: "pointer", display: "flex", alignItems: "center", gap: 4, whiteSpace: "nowrap",
           }}>
-            <span>{t.icon}</span> {t.label} <span style={{ fontSize: 9, opacity: 0.6 }}>({stageData.filter(d => d.tier === t.key).length})</span>
+            <Icon name={t.icon} size={12} color={tierFilter === t.key ? t.color : "#64748b"} /> {t.label} <span style={{ fontSize: 9, opacity: 0.6 }}>({stageData.filter(d => d.tier === t.key).length})</span>
           </button>
         ))}
       </div>
@@ -211,7 +213,7 @@ export default function CompoundFormation() {
               background: stageIdx === i ? `${s.color}15` : "transparent", color: stageIdx === i ? s.color : "#64748b",
               fontSize: 12, fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", gap: 5,
             }}>
-              <span>{s.icon}</span>{s.label}<span style={{ fontSize: 9, opacity: 0.6 }}>({ALL[s.key].length})</span>
+              <Icon name={s.icon} size={13} color={stageIdx === i ? s.color : "#64748b"} />{s.label}<span style={{ fontSize: 9, opacity: 0.6 }}>({ALL[s.key].length})</span>
             </button>
             {i < 3 && <svg width="28" height="16" style={{ margin: "0 2px" }}><path d="M2 8 L20 8 M15 3 L20 8 L15 13" stroke={stageIdx > i ? STAGES[i+1].color : "#334155"} strokeWidth={1.5} fill="none" /></svg>}
           </div>
@@ -271,7 +273,7 @@ export default function CompoundFormation() {
 
               {selected.institution && (
                 <div style={{ marginBottom: 12, padding: "6px 12px", background: "#ec489915", borderRadius: 5, border: "1px solid #ec489933", display: "inline-flex", alignItems: "center", gap: 6, fontSize: 11, color: "#ec4899" }}>
-                  🏛️ {selected.institution}
+                  <Icon name="institution" size={12} color="#ec4899" /> {selected.institution}
                 </div>
               )}
 
@@ -282,7 +284,7 @@ export default function CompoundFormation() {
               {/* Binding Rules (Compounds) */}
               {selected.binding && (
                 <div style={{ marginBottom: 14, padding: 14, background: "#0f172a", borderRadius: 7, border: "1px solid #ec489933" }}>
-                  <div style={{ fontSize: 9, color: "#ec4899", letterSpacing: "0.05em", marginBottom: 8 }}>⚗️ COMPOUND BINDING RULES</div>
+                  <div style={{ fontSize: 9, color: "#ec4899", letterSpacing: "0.05em", marginBottom: 8, display: "flex", alignItems: "center", gap: 5 }}><Icon name="compound" size={11} color="#ec4899" /> COMPOUND BINDING RULES</div>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
                     {Object.entries(selected.binding).map(([k, v]) => (
                       <div key={k} style={{ padding: "8px 10px", background: "#111827", borderRadius: 5, textAlign: "center" }}>
@@ -296,14 +298,14 @@ export default function CompoundFormation() {
 
               {selected.tensions && (
                 <div style={{ marginBottom: 14, padding: 12, background: "#1c120a", borderRadius: 7, borderLeft: "3px solid #f97316" }}>
-                  <div style={{ fontSize: 9, color: "#f97316", letterSpacing: "0.05em", marginBottom: 3 }}>⚖️ TENSIONS & UNCERTAINTIES</div>
+                  <div style={{ fontSize: 9, color: "#f97316", letterSpacing: "0.05em", marginBottom: 3, display: "flex", alignItems: "center", gap: 5 }}><Icon name="scale" size={11} /> TENSIONS & UNCERTAINTIES</div>
                   <div style={{ fontSize: 12, color: "#fbbf24", lineHeight: 1.55 }}>{selected.tensions}</div>
                 </div>
               )}
 
               {selected.gaps?.length > 0 && (
                 <div style={{ marginBottom: 14, padding: 12, background: "#0f172a", borderRadius: 7, border: "1px solid #1e293b" }}>
-                  <div style={{ fontSize: 9, color: "#ef4444", letterSpacing: "0.05em", marginBottom: 6 }}>🕳️ WHAT'S MISSING</div>
+                  <div style={{ fontSize: 9, color: "#ef4444", letterSpacing: "0.05em", marginBottom: 6, display: "flex", alignItems: "center", gap: 5 }}><Icon name="gap" size={11} /> WHAT'S MISSING</div>
                   {selected.gaps.map((g, i) => <div key={i} style={{ fontSize: 11, color: "#94a3b8", padding: "3px 0 3px 14px", borderLeft: "2px solid #ef444444", marginBottom: 3 }}>{g}</div>)}
                 </div>
               )}
@@ -316,12 +318,16 @@ export default function CompoundFormation() {
                     borderRadius: showQuality ? "6px 6px 0 0" : 6, color: "#94a3b8", fontSize: 11, cursor: "pointer",
                     textAlign: "left", display: "flex", justifyContent: "space-between",
                   }}>
-                    <span>🔍 Data Quality Assessment ({selected.qualityNotes.length})</span>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon name="search" size={11} /> Data Quality Assessment ({selected.qualityNotes.length})</span>
                     <span>{showQuality ? "▲" : "▼"}</span>
                   </button>
                   {showQuality && (
                     <div style={{ padding: 12, background: "#0f172a", border: "1px solid #1e293b", borderTop: "none", borderRadius: "0 0 6px 6px", marginBottom: 14 }}>
-                      {selected.qualityNotes.map((n, i) => <div key={i} style={{ fontSize: 11, color: n.startsWith("⚠️") ? "#fbbf24" : "#94a3b8", padding: "4px 0 4px 10px", borderLeft: `2px solid ${n.startsWith("⚠️") ? "#f59e0b" : "#334155"}`, marginBottom: 3 }}>{n}</div>)}
+                      {selected.qualityNotes.map((n, i) => {
+                        const warn = n.startsWith("(!)");
+                        const text = warn ? n.slice(3).trim() : n;
+                        return <div key={i} style={{ fontSize: 11, color: warn ? "#fbbf24" : "#94a3b8", padding: "4px 0 4px 10px", borderLeft: `2px solid ${warn ? "#f59e0b" : "#334155"}`, marginBottom: 3 }}>{warn && <Icon name="warning" size={10} color="#f59e0b" style={{ verticalAlign: "-1px", marginRight: 4 }} />}{text}</div>;
+                      })}
                     </div>
                   )}
                 </>
@@ -330,7 +336,7 @@ export default function CompoundFormation() {
               {/* Recommendations */}
               {selected.recommendations && (
                 <div style={{ marginBottom: 14, marginTop: 14 }}>
-                  <div style={{ fontSize: 9, color: "#22c55e", letterSpacing: "0.05em", marginBottom: 8 }}>📋 RECOMMENDED ACTIONS</div>
+                  <div style={{ fontSize: 9, color: "#22c55e", letterSpacing: "0.05em", marginBottom: 8, display: "flex", alignItems: "center", gap: 5 }}><Icon name="clipboard" size={11} /> RECOMMENDED ACTIONS</div>
                   {selected.recommendations.map((r, i) => (
                     <div key={i} style={{ padding: "9px 12px", background: "#111827", borderRadius: 6, marginBottom: 5, borderLeft: `3px solid ${r.urgency === "HIGH" ? "#ef4444" : "#f59e0b"}` }}>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 3 }}>
@@ -371,7 +377,7 @@ export default function CompoundFormation() {
           ) : (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "#334155" }}>
               <div style={{ textAlign: "center" }}>
-                <div style={{ fontSize: 40, marginBottom: 8 }}>⚗️</div>
+                <div style={{ marginBottom: 8 }}><Icon name="compound" size={40} color="#334155" /></div>
                 <div style={{ fontSize: 13 }}>Select a signal to see cross-scale composition</div>
               </div>
             </div>

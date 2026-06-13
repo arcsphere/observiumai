@@ -8,19 +8,20 @@ import Tab5Pipeline from "./tabs/Tab5Pipeline.jsx";
 import Tab6Triggers from "./tabs/Tab6Triggers.jsx";
 import PitchDeck from "./tabs/PitchDeck.jsx";
 import AboutPage from "./tabs/AboutPage.jsx";
+import { Icon } from "./icons.jsx";
 
 // Docs live as a separate, shareable static page (public/docs.html) — not bundled
 // into the app model. Deploys to its own URL, e.g. /docs.html.
 const DOCS_URL = "/docs.html";
 
 const TABS = [
-  { key: "feed", label: "Live Feed", icon: "📡", color: "#f59e0b" },
-  { key: "compose", label: "Composition", icon: "👁️", color: "#3b82f6" },
-  { key: "compound", label: "Compound", icon: "⚗️", color: "#ec4899" },
-  { key: "routing", label: "Routing", icon: "🏛️", color: "#f43f5e" },
-  { key: "stakeholders", label: "Stakeholders", icon: "🗺️", color: "#14b8a6" },
-  { key: "pipeline", label: "Pipeline", icon: "🔄", color: "#22c55e" },
-  { key: "triggers", label: "Triggers", icon: "⚡", color: "#facc15" },
+  { key: "feed", label: "Live Feed", icon: "feed", color: "#f59e0b" },
+  { key: "compose", label: "Composition", icon: "observe", color: "#3b82f6" },
+  { key: "compound", label: "Compound", icon: "compound", color: "#ec4899" },
+  { key: "routing", label: "Routing", icon: "routing", color: "#f43f5e" },
+  { key: "stakeholders", label: "Stakeholders", icon: "stakeholders", color: "#14b8a6" },
+  { key: "pipeline", label: "Pipeline", icon: "pipeline", color: "#22c55e" },
+  { key: "triggers", label: "Triggers", icon: "triggers", color: "#facc15" },
 ];
 
 const TAB_COMPONENTS = {
@@ -111,7 +112,7 @@ export default function App() {
                 fontFamily: "inherit",
               }}
             >
-              <span style={{ fontSize: 14 }}>{t.icon}</span>
+              <Icon name={t.icon} size={14} />
               {t.label}
             </button>
           ))}
@@ -137,9 +138,10 @@ export default function App() {
             textDecoration: "none",
             display: "inline-flex",
             alignItems: "center",
+            gap: 5,
           }}
         >
-          📚 Docs ↗
+          <Icon name="docs" size={13} /> Docs
         </a>
 
         {/* Pitch Deck Button */}
@@ -157,9 +159,12 @@ export default function App() {
             fontFamily: "inherit",
             whiteSpace: "nowrap",
             marginLeft: 8,
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 5,
           }}
         >
-          🎤 Pitch
+          <Icon name="pitch" size={13} /> Pitch
         </button>
 
         {/* About Button */}
@@ -177,9 +182,12 @@ export default function App() {
             fontFamily: "inherit",
             whiteSpace: "nowrap",
             marginLeft: 4,
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 5,
           }}
         >
-          👤 About
+          <Icon name="about" size={13} /> About
         </button>
 
         {/* Region Label */}

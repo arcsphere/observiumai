@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { LAYERS, SOURCE_INSIGHT, STAKEHOLDERS, STATUS_STYLES } from "../stakeholders.js";
+import { Icon } from "../icons.jsx";
 
 const DOMAIN_COLORS = { health: "#ef4444", ecology: "#22c55e", agriculture: "#f59e0b", climate: "#3b82f6", infrastructure: "#6b7280", governance: "#a855f7" };
 
@@ -71,7 +72,8 @@ export default function StakeholderRouting() {
           <button onClick={autoPlay} disabled={autoPlaying} style={{
             padding: "6px 14px", borderRadius: 6, border: "1px solid #ec4899", background: autoPlaying ? "#1a1020" : "transparent",
             color: "#ec4899", fontSize: 11, cursor: autoPlaying ? "default" : "pointer", opacity: autoPlaying ? 0.5 : 1,
-          }}>{autoPlaying ? "⏳ ROUTING..." : "▶ FIRE ALL ROUTES"}</button>
+            display: "inline-flex", alignItems: "center", gap: 5,
+          }}>{autoPlaying ? <><Icon name="hourglass" size={12} /> ROUTING...</> : <><Icon name="play" size={12} /> FIRE ALL ROUTES</>}</button>
         </div>
       </div>
 
@@ -99,7 +101,7 @@ export default function StakeholderRouting() {
             background: activeLayer === l.key ? `${l.color}15` : "transparent", color: activeLayer === l.key ? l.color : "#64748b",
             fontSize: 11, cursor: "pointer", display: "flex", alignItems: "center", gap: 4, whiteSpace: "nowrap",
           }}>
-            <span>{l.icon}</span>{l.label}<span style={{ fontSize: 9, opacity: 0.6 }}>({layerCounts[l.key]})</span>
+            <Icon name={l.icon} size={12} color={activeLayer === l.key ? l.color : "#64748b"} />{l.label}<span style={{ fontSize: 9, opacity: 0.6 }}>({layerCounts[l.key]})</span>
           </button>
         ))}
       </div>
@@ -128,7 +130,7 @@ export default function StakeholderRouting() {
             return (
               <div key={layer.key}>
                 <div style={{ padding: "10px 14px 4px", display: "flex", alignItems: "center", gap: 6 }}>
-                  <span style={{ fontSize: 14 }}>{layer.icon}</span>
+                  <Icon name={layer.icon} size={14} color={layer.color} />
                   <span style={{ fontSize: 11, fontWeight: 700, color: layer.color, letterSpacing: "0.02em" }}>{layer.label.toUpperCase()}</span>
                   <span style={{ fontSize: 9, color: "#475569" }}>— {layer.subtitle}</span>
                 </div>
@@ -169,7 +171,7 @@ export default function StakeholderRouting() {
             return (
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4, flexWrap: "wrap" }}>
-                  <span style={{ fontSize: 14 }}>{layer.icon}</span>
+                  <Icon name={layer.icon} size={14} color={layer.color} />
                   <span style={{ fontSize: 11, fontWeight: 700, color: layer.color }}>{layer.label.toUpperCase()}</span>
                   <StatusBadge status={selected.status} />
                   <span style={{ fontSize: 9, padding: "1px 6px", borderRadius: 3, background: `${URGENCY_COLORS[selected.urgency]}18`, color: URGENCY_COLORS[selected.urgency] }}>{selected.urgency}</span>
@@ -191,25 +193,25 @@ export default function StakeholderRouting() {
 
                 {/* Human Context */}
                 <div style={{ padding: 14, background: "#111827", borderRadius: 7, borderLeft: "3px solid #64748b", marginBottom: 14 }}>
-                  <div style={{ fontSize: 10, color: "#64748b", letterSpacing: "0.05em", marginBottom: 4 }}>👤 THE PERSON BEHIND THE ROLE</div>
+                  <div style={{ fontSize: 10, color: "#64748b", letterSpacing: "0.05em", marginBottom: 4, display: "flex", alignItems: "center", gap: 5 }}><Icon name="user" size={11} /> THE PERSON BEHIND THE ROLE</div>
                   <div style={{ fontSize: 13, color: "#cbd5e1", lineHeight: 1.6, fontStyle: "italic" }}>{selected.humanContext}</div>
                 </div>
 
                 {/* Trigger */}
                 <div style={{ padding: 12, background: "#0f172a", borderRadius: 7, border: "1px solid #1e293b", marginBottom: 14 }}>
-                  <div style={{ fontSize: 10, color: "#f59e0b", letterSpacing: "0.05em", marginBottom: 4 }}>⚡ TRIGGER CONDITION</div>
+                  <div style={{ fontSize: 10, color: "#f59e0b", letterSpacing: "0.05em", marginBottom: 4, display: "flex", alignItems: "center", gap: 5 }}><Icon name="zap" size={11} /> TRIGGER CONDITION</div>
                   <div style={{ fontSize: 12, color: "#fbbf24", fontFamily: "monospace", lineHeight: 1.5 }}>{selected.trigger}</div>
                 </div>
 
                 {/* Obligation */}
                 <div style={{ padding: 12, background: "#0f172a", borderRadius: 7, border: "1px solid #1e293b", marginBottom: 14 }}>
-                  <div style={{ fontSize: 10, color: layer.color, letterSpacing: "0.05em", marginBottom: 4 }}>📜 OBLIGATION / MANDATE</div>
+                  <div style={{ fontSize: 10, color: layer.color, letterSpacing: "0.05em", marginBottom: 4, display: "flex", alignItems: "center", gap: 5 }}><Icon name="obligation" size={11} /> OBLIGATION / MANDATE</div>
                   <div style={{ fontSize: 12, color: "#cbd5e1", lineHeight: 1.5 }}>{selected.obligation}</div>
                 </div>
 
                 {/* What they receive */}
                 <div style={{ padding: 12, background: "#0f172a", borderRadius: 7, border: "1px solid #1e293b", marginBottom: 14 }}>
-                  <div style={{ fontSize: 10, color: "#3b82f6", letterSpacing: "0.05em", marginBottom: 4 }}>📦 INFORMATION PACKAGE</div>
+                  <div style={{ fontSize: 10, color: "#3b82f6", letterSpacing: "0.05em", marginBottom: 4, display: "flex", alignItems: "center", gap: 5 }}><Icon name="package" size={11} /> INFORMATION PACKAGE</div>
                   <div style={{ fontSize: 12, color: "#cbd5e1", lineHeight: 1.5 }}>{selected.receives}</div>
                 </div>
 
@@ -231,7 +233,7 @@ export default function StakeholderRouting() {
 
                 {/* Layer explanation */}
                 <div style={{ padding: 12, background: "#111827", borderRadius: 7, border: `1px solid ${layer.color}22` }}>
-                  <div style={{ fontSize: 10, color: layer.color, letterSpacing: "0.05em", marginBottom: 4 }}>{layer.icon} ABOUT THIS ROUTING LAYER</div>
+                  <div style={{ fontSize: 10, color: layer.color, letterSpacing: "0.05em", marginBottom: 4, display: "flex", alignItems: "center", gap: 5 }}><Icon name={layer.icon} size={11} color={layer.color} /> ABOUT THIS ROUTING LAYER</div>
                   <div style={{ fontSize: 12, color: "#94a3b8", lineHeight: 1.5 }}>{layer.description}</div>
                 </div>
               </div>
@@ -239,7 +241,7 @@ export default function StakeholderRouting() {
           })() : (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "#334155" }}>
               <div style={{ textAlign: "center" }}>
-                <div style={{ fontSize: 40, marginBottom: 8 }}>🏛️</div>
+                <div style={{ marginBottom: 8 }}><Icon name="routing" size={40} color="#334155" /></div>
                 <div style={{ fontSize: 13 }}>Select a stakeholder to see routing details</div>
                 <div style={{ fontSize: 11, color: "#475569", marginTop: 4 }}>or hit "Fire All Routes" to animate the full topology</div>
               </div>

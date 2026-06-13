@@ -1,16 +1,17 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { Icon } from "../icons.jsx";
 
 // ═══════════════════════════════════════════════
-// ✏️ CONFIGURE PIPELINE LABELS HERE
+// CONFIGURE PIPELINE LABELS HERE
 // ═══════════════════════════════════════════════
 const PIPELINE = [
-  { key: "incidents", label: "Incidents", icon: "⚡", color: "#f59e0b" },
-  { key: "observations", label: "Observations", icon: "👁️", color: "#3b82f6" },
-  { key: "patterns", label: "Patterns", icon: "🔗", color: "#a855f7" },
-  { key: "insights", label: "Insights", icon: "💡", color: "#22c55e" },
+  { key: "incidents", label: "Incidents", icon: "zap", color: "#f59e0b" },
+  { key: "observations", label: "Observations", icon: "observe", color: "#3b82f6" },
+  { key: "patterns", label: "Patterns", icon: "pattern", color: "#a855f7" },
+  { key: "insights", label: "Insights", icon: "insight", color: "#22c55e" },
 ];
 
-// ✏️ CONFIGURE REGIONS / ZONES HERE
+// CONFIGURE REGIONS / ZONES HERE
 const REGIONS = [
   { key: "all", label: "All Zones" },
   { key: "ramanagara-east", label: "Ramanagara East" },
@@ -21,7 +22,7 @@ const REGIONS = [
 // ═══════════════════════════════════════════════
 
 const DOMAIN_COLORS = { health: "#ef4444", ecology: "#22c55e", agriculture: "#f59e0b", climate: "#3b82f6", infrastructure: "#6b7280" };
-const MODALITY_ICONS = { voice: "🎙️", image: "📷", video: "🎥", sensor: "📡", text: "📝", social: "📱" };
+const MODALITY_ICONS = { voice: "voice", image: "image", video: "video", sensor: "sensor", text: "text", social: "social" };
 
 const QUALITY_LABELS = {
   high: { label: "HIGH", color: "#22c55e", bg: "#22c55e18" },
@@ -35,7 +36,7 @@ const INCIDENTS = [
   { id: "INC-4471", modality: "voice", domain: "health", summary: "Farmer bitten by suspected cobra near paddy field", observer: { name: "Ramesh K.", role: "Farmer", context: "In visible pain, speech hurried. Called from neighbor's phone. Spoke in Kannada dialect, partial translation." }, quality: "moderate", confidence: 0.72, qualityNotes: ["Single source — no corroboration yet", "Species ID from caller description only", "GPS approximate — cell tower derived", "Caller in distress — details may be incomplete"], raw: "\"saab... haavu kachithu... cobra thara ide...\"", lat: 13.12, lng: 77.58, ts: "08:14 IST", gaps: ["No photo of snake", "Time since bite unknown"], zone: "ramanagara-east" },
   { id: "INC-4472", modality: "image", domain: "ecology", summary: "Cobra photographed near irrigation canal with shed skin", observer: { name: "Lakshmi N.", role: "ASHA health worker", context: "Took photo on routine village visit. Calm, deliberate capture. Familiar with local wildlife." }, quality: "high", confidence: 0.92, qualityNotes: ["GPS embedded in image metadata", "ML species: Naja naja (92%)", "Trained community health worker"], raw: "IMG_2847.jpg — 4032×3024, GPS embedded", lat: 13.13, lng: 77.57, ts: "08:22 IST", gaps: ["Shed skin not separately photographed"], zone: "channapatna" },
   { id: "INC-4473", modality: "voice", domain: "ecology", summary: "Truck driver: large snake crossing highway near construction", observer: { name: "Manjunath D.", role: "Truck driver", context: "Called while driving. Background noise. Brief 40-second call — did not stop." }, quality: "low", confidence: 0.48, qualityNotes: ["Fleeting visual from moving vehicle", "No photo or video", "Species unidentifiable", "Location approximate"], raw: "\"doḍḍa haavu road cross maadthu...\"", lat: 13.11, lng: 77.61, ts: "09:05 IST", gaps: ["Species unknown", "Direction of movement unknown"], zone: "nh275-corridor" },
-  { id: "INC-4474", modality: "sensor", domain: "agriculture", summary: "Soil moisture sensor: 40% drop in 72hrs, canal dry", observer: { name: "IoT Grid SG-17", role: "Automated sensor", context: "Unattended node. Last maintenance: 12 days ago. Battery: 67%." }, quality: "high", confidence: 0.94, qualityNotes: ["Automated — no observer bias", "Calibrated ±3% error margin", "Consistent with adjacent sensor SG-16", "⚠️ Maintenance 12 days ago — drift possible"], raw: "SG17: moisture=0.12, delta_72h=-0.41", lat: 13.14, lng: 77.55, ts: "09:30 IST", gaps: ["Canal dry cause unconfirmed"], zone: "ramanagara-east" },
+  { id: "INC-4474", modality: "sensor", domain: "agriculture", summary: "Soil moisture sensor: 40% drop in 72hrs, canal dry", observer: { name: "IoT Grid SG-17", role: "Automated sensor", context: "Unattended node. Last maintenance: 12 days ago. Battery: 67%." }, quality: "high", confidence: 0.94, qualityNotes: ["Automated — no observer bias", "Calibrated ±3% error margin", "Consistent with adjacent sensor SG-16", "(!) Maintenance 12 days ago — drift possible"], raw: "SG17: moisture=0.12, delta_72h=-0.41", lat: 13.14, lng: 77.55, ts: "09:30 IST", gaps: ["Canal dry cause unconfirmed"], zone: "ramanagara-east" },
   { id: "INC-4475", modality: "social", domain: "ecology", summary: "'Third snake in our village this week. Never seen this before.'", observer: { name: "@farmlife_karnataka", role: "Social media user", context: "Anonymous account. 47 engagements. Geo-tag present but could be manually set." }, quality: "unverified", confidence: 0.38, qualityNotes: ["Anonymous source", "Geo-tag not validated", "Frequency claim unverifiable", "Sentiment: genuine concern"], raw: "Twitter/X post, 47 engagements, geo-tagged", lat: 13.10, lng: 77.59, ts: "10:12 IST", gaps: ["Species unknown", "No visual evidence", "Village not specified"], zone: "channapatna" },
   { id: "INC-4476", modality: "voice", domain: "health", summary: "PHC nurse: 2nd snakebite this week, anti-venom stock critical", observer: { name: "Nurse Priya S.", role: "PHC staff", context: "Called during shift. Professional, structured. Filed formal stock alert separately." }, quality: "high", confidence: 0.95, qualityNotes: ["Trained medical professional", "Cross-referenced with PHC register", "Stock count verified", "Formal channel also activated"], raw: "\"2nd case ee weekalli... anti-venom 3 vials maathra ide...\"", lat: 13.15, lng: 77.56, ts: "11:45 IST", gaps: ["First bite case details not captured"], zone: "ramanagara-east" },
   { id: "INC-4477", modality: "video", domain: "infrastructure", summary: "Video: blasting at highway expansion, debris near wetland buffer", observer: { name: "Construction crew (anon)", role: "Site worker", context: "WhatsApp video. Worker fears retaliation. Face not visible." }, quality: "moderate", confidence: 0.78, qualityNotes: ["Anonymous whistleblower", "GPS matches construction zone", "Wetland distance estimated from video", "Audio confirms blasting"], raw: "VID_0093.mp4 — 00:42, GPS embedded", lat: 13.13, lng: 77.60, ts: "12:20 IST", gaps: ["Distance to wetland unmeasured", "Blasting permit status unknown"], zone: "nh275-corridor" },
@@ -48,7 +49,7 @@ const OBSERVATIONS = [
   { id: "OBS-201", label: "Confirmed Cobra Encounter — Bite + Visual", sourceIds: ["INC-4471", "INC-4472"], domains: ["health", "ecology"], confidence: 0.86, quality: "moderate", description: "Farmer's bite report gains weight from ASHA worker's cobra photo 1.2km away and 8 minutes later. But the farmer's species ID is unconfirmed — he said 'looks like cobra.' The photo confirms cobra presence in the area, not necessarily the same individual.", qualityNotes: ["Two independent sources strengthen signal", "Species match is circumstantial", "Spatial proximity suggestive but not conclusive"], tensions: "The photo corroborates cobra presence but doesn't prove same snake. Farmer's description under pain may be unreliable.", gaps: ["No photo of the biting snake", "Same-individual link uncertain"], zones: ["ramanagara-east", "channapatna"] },
   { id: "OBS-202", label: "Unusual Snake Activity Cluster", sourceIds: ["INC-4473", "INC-4475", "INC-4478"], domains: ["ecology"], confidence: 0.62, quality: "low", description: "Three signals suggest increased activity: road crossing, social media sightings, atypical daytime movement on camera trap. But reliability varies wildly — one is a 40-second call from a moving truck.", qualityNotes: ["Camera trap data strong", "Truck sighting weak (fleeting, no photo)", "Social media unverified", "Pattern mainly driven by camera trap"], tensions: "Without truck and social reports, only camera trap remains. 'Cluster' narrative depends on weaker signals.", gaps: ["Seasonal baseline unknown", "Social media village unconfirmed"], zones: ["nh275-corridor", "channapatna", "reserve-edge"] },
   { id: "OBS-203", label: "Health System Under Emerging Pressure", sourceIds: ["INC-4471", "INC-4476"], domains: ["health"], confidence: 0.93, quality: "high", description: "Two snakebite cases in one week at same PHC, anti-venom critically low (3 vials). Nurse's report is professional and cross-referenced. This is a healthcare capacity signal, not just a wildlife observation.", qualityNotes: ["PHC nurse trained, report structured", "Stock count verified", "Two cases/week statistically unusual for this PHC"], tensions: "Both sources strong. External tension: does the health system know this connects to an ecological event?", gaps: ["First bite case details missing", "Regional supply chain status unknown"], zones: ["ramanagara-east"] },
-  { id: "OBS-204", label: "Abiotic Stress — Drought + Soil Collapse", sourceIds: ["INC-4474", "INC-4480"], domains: ["agriculture", "climate"], confidence: 0.96, quality: "high", description: "Two automated, calibrated instruments confirm: 23-day drought and rapid soil moisture loss. Strongest observation — minimal human bias, high precision, cross-validated.", qualityNotes: ["Both automated instruments", "IMD nationally calibrated", "⚠️ Soil sensor last maintained 12d ago"], tensions: "Sensors measure point locations. District-wide extrapolation carries uncertainty.", gaps: ["Canal failure cause unknown", "One weather station for entire district"], zones: ["ramanagara-east"] },
+  { id: "OBS-204", label: "Abiotic Stress — Drought + Soil Collapse", sourceIds: ["INC-4474", "INC-4480"], domains: ["agriculture", "climate"], confidence: 0.96, quality: "high", description: "Two automated, calibrated instruments confirm: 23-day drought and rapid soil moisture loss. Strongest observation — minimal human bias, high precision, cross-validated.", qualityNotes: ["Both automated instruments", "IMD nationally calibrated", "(!) Soil sensor last maintained 12d ago"], tensions: "Sensors measure point locations. District-wide extrapolation carries uncertainty.", gaps: ["Canal failure cause unknown", "One weather station for entire district"], zones: ["ramanagara-east"] },
   { id: "OBS-205", label: "Habitat Disruption — Construction + Trophic Signal", sourceIds: ["INC-4477", "INC-4479"], domains: ["infrastructure", "agriculture"], confidence: 0.68, quality: "moderate", description: "Highway blasting near wetland + rodent surge in villages. Link is suggestive — habitat disruption can trigger prey-chain cascades — but inferred, not directly observed. Construction video from anonymous whistleblower.", qualityNotes: ["Video GPS matches construction zone", "Crop report via official channel", "Causal link is hypothesis", "Anonymous source limits follow-up"], tensions: "Rodent surge could have other causes. Construction link plausible but unproven.", gaps: ["No direct wildlife displacement observation", "Only 3 villages surveyed"], zones: ["nh275-corridor", "ramanagara-east"] },
 ];
 
@@ -226,7 +227,8 @@ export default function SignalComposition() {
           <button onClick={autoPlay} disabled={autoPlaying} style={{
             padding: "6px 14px", borderRadius: 6, border: "1px solid #a855f7", background: autoPlaying ? "#1a1a2e" : "transparent",
             color: "#a855f7", fontSize: 11, cursor: autoPlaying ? "default" : "pointer", opacity: autoPlaying ? 0.5 : 1,
-          }}>{autoPlaying ? "⏳ COMPOSING..." : "▶ AUTO-COMPOSE"}</button>
+            display: "inline-flex", alignItems: "center", gap: 5,
+          }}>{autoPlaying ? <><Icon name="hourglass" size={12} /> COMPOSING...</> : <><Icon name="play" size={12} /> AUTO-COMPOSE</>}</button>
         </div>
       </div>
 
@@ -243,7 +245,7 @@ export default function SignalComposition() {
                 fontSize: 12, fontWeight: 600, cursor: "pointer", transition: "all 0.3s",
                 display: "flex", alignItems: "center", gap: 5,
               }}>
-                <span>{p.icon}</span>{p.label}<span style={{ fontSize: 9, opacity: 0.6 }}>({(zone === "all" ? ALL_DATA[p.key] : ALL_DATA[p.key].filter(d => getZones(d).includes(zone))).length})</span>
+                <Icon name={p.icon} size={13} />{p.label}<span style={{ fontSize: 9, opacity: 0.6 }}>({(zone === "all" ? ALL_DATA[p.key] : ALL_DATA[p.key].filter(d => getZones(d).includes(zone))).length})</span>
               </button>
               {i < 3 && <svg width="28" height="16" style={{ margin: "0 2px" }}><path d="M2 8 L20 8 M15 3 L20 8 L15 13" stroke={stage > i ? PIPELINE[i+1].color : "#334155"} strokeWidth={1.5} fill="none" /></svg>}
             </div>
@@ -320,20 +322,20 @@ export default function SignalComposition() {
 
               {selected.raw && (
                 <div style={{ marginBottom: 14, padding: 10, background: "#0d1117", borderRadius: 5, fontFamily: "monospace", fontSize: 11, color: "#94a3b8", borderLeft: `3px solid ${sc}44` }}>
-                  {selected.modality && <span style={{ marginRight: 6 }}>{MODALITY_ICONS[selected.modality]}</span>}{selected.raw}
+                  {selected.modality && <Icon name={MODALITY_ICONS[selected.modality]} size={12} style={{ marginRight: 6, verticalAlign: "-2px" }} />}{selected.raw}
                 </div>
               )}
 
               {selected.tensions && (
                 <div style={{ marginBottom: 14, padding: 12, background: "#1c120a", borderRadius: 7, borderLeft: "3px solid #f97316" }}>
-                  <div style={{ fontSize: 9, color: "#f97316", letterSpacing: "0.05em", marginBottom: 3 }}>⚖️ TENSIONS & UNCERTAINTIES</div>
+                  <div style={{ fontSize: 9, color: "#f97316", letterSpacing: "0.05em", marginBottom: 3, display: "flex", alignItems: "center", gap: 5 }}><Icon name="scale" size={11} /> TENSIONS & UNCERTAINTIES</div>
                   <div style={{ fontSize: 12, color: "#fbbf24", lineHeight: 1.55 }}>{selected.tensions}</div>
                 </div>
               )}
 
               {selected.gaps?.length > 0 && (
                 <div style={{ marginBottom: 14, padding: 12, background: "#0f172a", borderRadius: 7, border: "1px solid #1e293b" }}>
-                  <div style={{ fontSize: 9, color: "#ef4444", letterSpacing: "0.05em", marginBottom: 6 }}>🕳️ WHAT'S MISSING</div>
+                  <div style={{ fontSize: 9, color: "#ef4444", letterSpacing: "0.05em", marginBottom: 6, display: "flex", alignItems: "center", gap: 5 }}><Icon name="gap" size={11} /> WHAT'S MISSING</div>
                   {selected.gaps.map((g, i) => (
                     <div key={i} style={{ fontSize: 11, color: "#94a3b8", padding: "3px 0 3px 14px", borderLeft: "2px solid #ef444444", marginBottom: 3, lineHeight: 1.4 }}>{g}</div>
                   ))}
@@ -347,14 +349,20 @@ export default function SignalComposition() {
                     width: "100%", padding: "8px 12px", background: "#111827", border: "1px solid #1e293b", borderRadius: showQuality ? "6px 6px 0 0" : 6,
                     color: "#94a3b8", fontSize: 11, cursor: "pointer", textAlign: "left", display: "flex", justifyContent: "space-between",
                   }}>
-                    <span>🔍 Data Quality Assessment ({selected.qualityNotes.length})</span>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icon name="search" size={11} /> Data Quality Assessment ({selected.qualityNotes.length})</span>
                     <span>{showQuality ? "▲" : "▼"}</span>
                   </button>
                   {showQuality && (
                     <div style={{ padding: 12, background: "#0f172a", border: "1px solid #1e293b", borderTop: "none", borderRadius: "0 0 6px 6px", marginBottom: 14 }}>
-                      {selected.qualityNotes.map((n, i) => (
-                        <div key={i} style={{ fontSize: 11, color: n.startsWith("⚠️") ? "#fbbf24" : "#94a3b8", padding: "4px 0 4px 10px", borderLeft: `2px solid ${n.startsWith("⚠️") ? "#f59e0b" : "#334155"}`, marginBottom: 3, lineHeight: 1.4 }}>{n}</div>
-                      ))}
+                      {selected.qualityNotes.map((n, i) => {
+                        const warn = n.startsWith("(!)");
+                        const text = warn ? n.slice(3).trim() : n;
+                        return (
+                          <div key={i} style={{ fontSize: 11, color: warn ? "#fbbf24" : "#94a3b8", padding: "4px 0 4px 10px", borderLeft: `2px solid ${warn ? "#f59e0b" : "#334155"}`, marginBottom: 3, lineHeight: 1.4 }}>
+                            {warn && <Icon name="warning" size={10} color="#f59e0b" style={{ verticalAlign: "-1px", marginRight: 4 }} />}{text}
+                          </div>
+                        );
+                      })}
                     </div>
                   )}
                 </>
@@ -363,7 +371,7 @@ export default function SignalComposition() {
               {/* Recommendations */}
               {selected.recommendations && (
                 <div style={{ marginBottom: 14, marginTop: 14 }}>
-                  <div style={{ fontSize: 9, color: "#22c55e", letterSpacing: "0.05em", marginBottom: 8 }}>📋 RECOMMENDED ACTIONS</div>
+                  <div style={{ fontSize: 9, color: "#22c55e", letterSpacing: "0.05em", marginBottom: 8, display: "flex", alignItems: "center", gap: 5 }}><Icon name="clipboard" size={11} /> RECOMMENDED ACTIONS</div>
                   {selected.recommendations.map((r, i) => (
                     <div key={i} style={{ padding: "9px 12px", background: "#111827", borderRadius: 6, marginBottom: 5, borderLeft: `3px solid ${r.urgency === "HIGH" ? "#ef4444" : "#f59e0b"}` }}>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 3 }}>
@@ -396,7 +404,7 @@ export default function SignalComposition() {
           ) : (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "#334155" }}>
               <div style={{ textAlign: "center" }}>
-                <div style={{ fontSize: 40, marginBottom: 8 }}>👁️</div>
+                <div style={{ marginBottom: 8 }}><Icon name="observe" size={40} color="#334155" /></div>
                 <div style={{ fontSize: 13 }}>Select an item to see its story, sources, and quality</div>
               </div>
             </div>

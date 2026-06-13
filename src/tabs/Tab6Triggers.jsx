@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
+import { Icon } from "../icons.jsx";
 
 // ═══════════════════════════════════════════════
-// ✏️ CONFIGURE TRIGGER TEMPLATES HERE
+// CONFIGURE TRIGGER TEMPLATES HERE
 // ═══════════════════════════════════════════════
 const TRIGGER_TEMPLATES = [
-  { id: "TRG-01", name: "Snakebite Cluster", category: "health-ecology", icon: "🐍",
+  { id: "TRG-01", name: "Snakebite Cluster", category: "health-ecology", icon: "snake",
     description: "Activates when snakebite incidents exceed baseline within a defined geographic window, combined with ecological displacement indicators.",
     conditions: [
       { field: "Bite cases / 7 days", operator: "≥", value: "2", source: "PHC intake register", editable: true },
@@ -13,7 +14,7 @@ const TRIGGER_TEMPLATES = [
     ],
     defaults: { duration: "7 days", geoScope: "10 km", escalation: "auto", ilk: true },
   },
-  { id: "TRG-02", name: "Drought-Displacement Cascade", category: "climate-ecology", icon: "🌡️",
+  { id: "TRG-02", name: "Drought-Displacement Cascade", category: "climate-ecology", icon: "thermometer",
     description: "Fires when prolonged drought indicators correlate with wildlife behavioral anomalies and human-wildlife encounter increases.",
     conditions: [
       { field: "Consecutive dry days", operator: "≥", value: "14", source: "IMD weather station", editable: true },
@@ -22,7 +23,7 @@ const TRIGGER_TEMPLATES = [
     ],
     defaults: { duration: "14 days", geoScope: "25 km", escalation: "auto", ilk: true },
   },
-  { id: "TRG-03", name: "Construction-Habitat Impact", category: "infrastructure-ecology", icon: "🏗️",
+  { id: "TRG-03", name: "Construction-Habitat Impact", category: "infrastructure-ecology", icon: "architecture",
     description: "Monitors active construction within buffer zones of sensitive habitats. Triggers when displacement indicators emerge near construction activity.",
     conditions: [
       { field: "Active construction", operator: "within", value: "500m of habitat buffer", source: "Project GIS / reports", editable: true },
@@ -31,7 +32,7 @@ const TRIGGER_TEMPLATES = [
     ],
     defaults: { duration: "30 days", geoScope: "5 km", escalation: "manual", ilk: false },
   },
-  { id: "TRG-04", name: "Anti-Venom Supply Critical", category: "health", icon: "💉",
+  { id: "TRG-04", name: "Anti-Venom Supply Critical", category: "health", icon: "syringe",
     description: "Health system capacity trigger. Fires when anti-venom stock falls below treatment threshold relative to active case rate.",
     conditions: [
       { field: "Anti-venom vials", operator: "≤", value: "5", source: "PHC inventory", editable: true },
@@ -40,7 +41,7 @@ const TRIGGER_TEMPLATES = [
     ],
     defaults: { duration: "3 days", geoScope: "District", escalation: "auto", ilk: false },
   },
-  { id: "TRG-05", name: "Community Alert Surge", category: "social-ecology", icon: "📱",
+  { id: "TRG-05", name: "Community Alert Surge", category: "social-ecology", icon: "social",
     description: "Social signal trigger. Activates when community-sourced reports exceed noise threshold, indicating genuine concern rather than isolated posts.",
     conditions: [
       { field: "Community reports / 48h", operator: "≥", value: "5", source: "Social media, helplines, ASHA", editable: true },
@@ -51,7 +52,7 @@ const TRIGGER_TEMPLATES = [
   },
 ];
 
-// ✏️ RISK WINDOW SCENARIOS (pre-built demo)
+// RISK WINDOW SCENARIOS (pre-built demo)
 const ACTIVE_WINDOWS = [
   {
     id: "RW-001", trigger: "TRG-01", name: "Ramanagara Snakebite Cluster",
@@ -187,9 +188,9 @@ export default function TriggerConfiguration() {
                 </div>
                 <div style={{ fontSize: 13, fontWeight: 600, color: "#e2e8f0", lineHeight: 1.3, marginBottom: 4 }}>{w.name}</div>
                 <div style={{ display: "flex", gap: 8, fontSize: 10, color: "#64748b" }}>
-                  <span>📍 {w.geo.radius}</span>
-                  <span>⏱️ Expires {w.expiresAt.split(" ")[0]}</span>
-                  <span>🔺 Level {w.escalationLevel}</span>
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: 3 }}><Icon name="location" size={10} /> {w.geo.radius}</span>
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: 3 }}><Icon name="timer" size={10} /> Expires {w.expiresAt.split(" ")[0]}</span>
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: 3 }}><Icon name="escalation" size={10} /> Level {w.escalationLevel}</span>
                 </div>
               </div>
             ))}
@@ -224,7 +225,7 @@ export default function TriggerConfiguration() {
 
                 {/* Zones */}
                 <div style={{ marginBottom: 14, padding: 12, background: "#0f172a", borderRadius: 7, border: "1px solid #1e293b" }}>
-                  <div style={{ fontSize: 9, color: "#3b82f6", letterSpacing: "0.05em", marginBottom: 6 }}>📍 MONITORING ZONES</div>
+                  <div style={{ fontSize: 9, color: "#3b82f6", letterSpacing: "0.05em", marginBottom: 6, display: "flex", alignItems: "center", gap: 5 }}><Icon name="location" size={11} /> MONITORING ZONES</div>
                   <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
                     {selectedWindow.geo.zones.map(z => (
                       <span key={z} style={{ fontSize: 11, padding: "4px 10px", borderRadius: 4, background: "#3b82f618", color: "#60a5fa", border: "1px solid #3b82f633" }}>{z}</span>
@@ -237,7 +238,7 @@ export default function TriggerConfiguration() {
                 <div style={{ marginBottom: 14, padding: 12, background: "#111827", borderRadius: 7, border: `1px solid ${selectedWindow.ilkEnabled ? "#a855f733" : "#1e293b"}` }}>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                     <div>
-                      <div style={{ fontSize: 9, color: "#a855f7", letterSpacing: "0.05em", marginBottom: 2 }}>🌿 INDIGENOUS & LOCAL KNOWLEDGE (ILK)</div>
+                      <div style={{ fontSize: 9, color: "#a855f7", letterSpacing: "0.05em", marginBottom: 2, display: "flex", alignItems: "center", gap: 5 }}><Icon name="ecology" size={11} color="#a855f7" /> INDIGENOUS & LOCAL KNOWLEDGE (ILK)</div>
                       <div style={{ fontSize: 12, color: "#cbd5e1", lineHeight: 1.5 }}>
                         {selectedWindow.ilkEnabled
                           ? "Enabled — local and indigenous knowledge signals are flagged, tagged, and incorporated. Retrospective reclassification available."
@@ -260,7 +261,7 @@ export default function TriggerConfiguration() {
 
                 {/* Guest Authorities */}
                 <div style={{ marginBottom: 14 }}>
-                  <div style={{ fontSize: 9, color: "#ec4899", letterSpacing: "0.05em", marginBottom: 8 }}>👥 GUEST AUTHORITY ACCESS</div>
+                  <div style={{ fontSize: 9, color: "#ec4899", letterSpacing: "0.05em", marginBottom: 8, display: "flex", alignItems: "center", gap: 5 }}><Icon name="users" size={11} color="#ec4899" /> GUEST AUTHORITY ACCESS</div>
                   {selectedWindow.guestAuthorities.map((g, i) => (
                     <div key={i} style={{ padding: "10px 12px", background: "#111827", borderRadius: 6, marginBottom: 5, borderLeft: "3px solid #ec4899" }}>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 2 }}>
@@ -275,7 +276,7 @@ export default function TriggerConfiguration() {
 
                 {/* Escalation History */}
                 <div style={{ marginBottom: 14 }}>
-                  <div style={{ fontSize: 9, color: "#f59e0b", letterSpacing: "0.05em", marginBottom: 8 }}>📈 ESCALATION HISTORY</div>
+                  <div style={{ fontSize: 9, color: "#f59e0b", letterSpacing: "0.05em", marginBottom: 8, display: "flex", alignItems: "center", gap: 5 }}><Icon name="chart" size={11} /> ESCALATION HISTORY</div>
                   {selectedWindow.escalationHistory.map((e, i) => (
                     <div key={i} style={{ display: "flex", gap: 12, marginBottom: 6 }}>
                       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: 20, flexShrink: 0 }}>
@@ -293,7 +294,7 @@ export default function TriggerConfiguration() {
 
                 {/* Resolution Criteria */}
                 <div style={{ padding: 14, background: "#0f172a", borderRadius: 7, border: "1px solid #1e293b" }}>
-                  <div style={{ fontSize: 9, color: "#22c55e", letterSpacing: "0.05em", marginBottom: 8 }}>✅ RESOLUTION CRITERIA — Window closes when ALL are met</div>
+                  <div style={{ fontSize: 9, color: "#22c55e", letterSpacing: "0.05em", marginBottom: 8, display: "flex", alignItems: "center", gap: 5 }}><Icon name="check-circle" size={11} color="#22c55e" /> RESOLUTION CRITERIA — Window closes when ALL are met</div>
                   {selectedWindow.resolutionCriteria.map((r, i) => (
                     <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
                       <div style={{
@@ -301,7 +302,7 @@ export default function TriggerConfiguration() {
                         background: r.met ? "#22c55e22" : "transparent",
                         display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
                       }}>
-                        {r.met && <span style={{ color: "#22c55e", fontSize: 11 }}>✓</span>}
+                        {r.met && <Icon name="check" size={12} color="#22c55e" />}
                       </div>
                       <span style={{ fontSize: 12, color: r.met ? "#22c55e" : "#94a3b8" }}>{r.criterion}</span>
                     </div>
@@ -314,7 +315,7 @@ export default function TriggerConfiguration() {
             ) : (
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "#334155" }}>
                 <div style={{ textAlign: "center" }}>
-                  <div style={{ fontSize: 40, marginBottom: 8 }}>⚡</div>
+                  <div style={{ marginBottom: 8 }}><Icon name="zap" size={40} color="#334155" /></div>
                   <div style={{ fontSize: 13 }}>Select a risk window</div>
                 </div>
               </div>
@@ -337,7 +338,7 @@ export default function TriggerConfiguration() {
                   border: `1px solid ${selectedTrigger?.id === t.id ? CATEGORY_COLORS[t.category] : "#1e293b"}`,
                 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                  <span style={{ fontSize: 16 }}>{t.icon}</span>
+                  <Icon name={t.icon} size={16} color={CATEGORY_COLORS[t.category]} />
                   <span style={{ fontFamily: "monospace", fontSize: 10, color: CATEGORY_COLORS[t.category], fontWeight: 700 }}>{t.id}</span>
                   <span style={{ fontSize: 9, padding: "1px 6px", borderRadius: 3, background: `${CATEGORY_COLORS[t.category]}18`, color: CATEGORY_COLORS[t.category] }}>{t.category}</span>
                 </div>
@@ -352,7 +353,7 @@ export default function TriggerConfiguration() {
             {selectedTrigger ? (
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                  <span style={{ fontSize: 20 }}>{selectedTrigger.icon}</span>
+                  <Icon name={selectedTrigger.icon} size={20} color={CATEGORY_COLORS[selectedTrigger.category]} />
                   <span style={{ fontFamily: "monospace", fontSize: 13, color: CATEGORY_COLORS[selectedTrigger.category], fontWeight: 700 }}>{selectedTrigger.id}</span>
                 </div>
                 <h2 style={{ fontSize: 18, fontWeight: 700, margin: "0 0 4px" }}>{selectedTrigger.name}</h2>
@@ -360,7 +361,7 @@ export default function TriggerConfiguration() {
 
                 {/* Editable Conditions */}
                 <div style={{ marginBottom: 16 }}>
-                  <div style={{ fontSize: 9, color: "#f59e0b", letterSpacing: "0.05em", marginBottom: 8 }}>⚡ TRIGGER CONDITIONS — click values to configure</div>
+                  <div style={{ fontSize: 9, color: "#f59e0b", letterSpacing: "0.05em", marginBottom: 8, display: "flex", alignItems: "center", gap: 5 }}><Icon name="zap" size={11} /> TRIGGER CONDITIONS — click values to configure</div>
                   {selectedTrigger.conditions.map((c, i) => (
                     <div key={i} style={{ padding: "10px 12px", background: "#111827", borderRadius: 6, marginBottom: 5, borderLeft: `3px solid ${CATEGORY_COLORS[selectedTrigger.category]}` }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
@@ -400,9 +401,9 @@ export default function TriggerConfiguration() {
                   width: "100%", padding: "10px", borderRadius: 6, border: "1px solid #22c55e",
                   background: simulating ? "#14532d22" : "#22c55e15", color: "#22c55e",
                   fontSize: 13, fontWeight: 600, cursor: simulating ? "default" : "pointer",
-                  marginBottom: 16,
+                  marginBottom: 16, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
                 }}>
-                  {simulating ? "⏳ Simulating..." : "▶ SIMULATE TRIGGER FIRE"}
+                  {simulating ? <><Icon name="hourglass" size={13} /> Simulating...</> : <><Icon name="play" size={13} /> SIMULATE TRIGGER FIRE</>}
                 </button>
 
                 {/* Simulation Output */}
@@ -428,7 +429,7 @@ export default function TriggerConfiguration() {
             ) : (
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "#334155" }}>
                 <div style={{ textAlign: "center" }}>
-                  <div style={{ fontSize: 40, marginBottom: 8 }}>⚡</div>
+                  <div style={{ marginBottom: 8 }}><Icon name="zap" size={40} color="#334155" /></div>
                   <div style={{ fontSize: 13 }}>Select a trigger to configure and simulate</div>
                 </div>
               </div>

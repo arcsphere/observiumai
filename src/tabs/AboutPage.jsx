@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
+import { Icon } from "../icons.jsx";
 
 // ═══════════════════════════════════════════════
-// ✏️ CONFIGURE YOUR INFO HERE
+// CONFIGURE YOUR INFO HERE
 // ═══════════════════════════════════════════════
 const FRAMEWORK_NAME = "OBSERVIUM·AI";
 const FRAMEWORK_FULL = "AI-Enabled Transdisciplinary Observability for Biodiversity & Human-Environment Systems";
@@ -11,7 +12,7 @@ const ARJUN = {
   role: "Graduate Researcher & AI Solutions Architect",
   university: "Northeastern University",
   email: "gurumurthy.ar@northeastern.edu",
-  linkedin: "https://linkedin.com/in/arjunshrivatsan", // ✏️ Replace
+  linkedin: "https://linkedin.com/in/arjunshrivatsan", // Replace
   photo:  "/arjun-photo.jpg",
   bio: `Arjun Shrivatsan is a technologist, AI solutions architect, and unapologetic multi-hyphenate who has worked across domains ranging from NASA and defense systems to sports and digital innovation. He is currently graduating from the College of Professional Studies in Applied Machine Intelligence and is gearing up to launch Arcsphere, a technology venture focused on cognition, innovation, and thoughtful applied AI.
 
@@ -90,7 +91,7 @@ function ConfBadge({ href, icon, title, sub, color, isLg }) {
       border: `1px solid ${color}33`,
       textDecoration: "none",
     }}>
-      <span style={{ fontSize: isLg ? 24 : 16 }}>{icon}</span>
+      <Icon name={icon} size={isLg ? 22 : 15} color={color} />
       <div>
         <div style={{ fontSize: isLg ? 14 : 11, fontWeight: 700, color }}>{title}</div>
         <div style={{ fontSize: isLg ? 12 : 10, color: "#94a3b8" }}>{sub}</div>
@@ -103,8 +104,8 @@ function WBFBadge({ size = "normal" }) {
   const isLg = size === "large";
   return (
     <div style={{ display: "inline-flex", gap: 10, flexWrap: "wrap", justifyContent: "center" }}>
-      <ConfBadge href="https://worldbiodiversityforum.org/" icon="🌍" title="World Biodiversity Forum 2026" sub="Davos, Switzerland — Oral Presentation" color="#f59e0b" isLg={isLg} />
-      <ConfBadge href="https://aessconference.org/" icon="🎓" title="AESS 2026" sub="Annual Conference" color="#22c55e" isLg={isLg} />
+      <ConfBadge href="https://worldbiodiversityforum.org/" icon="globe" title="World Biodiversity Forum 2026" sub="Davos, Switzerland — Oral Presentation" color="#f59e0b" isLg={isLg} />
+      <ConfBadge href="https://aessconference.org/" icon="grad" title="AESS 2026" sub="Annual Conference" color="#22c55e" isLg={isLg} />
     </div>
   );
 }
@@ -122,7 +123,7 @@ export default function AboutPage({ onExit }) {
     <div style={{ background: "#0a0e1a", color: "#e2e8f0", width: "100vw", minHeight: "100vh", fontFamily: "'Inter', system-ui, sans-serif", overflow: "auto" }}>
       {onExit && (
         <div style={{ position: "fixed", top: 16, right: 16, zIndex: 100 }}>
-          <button onClick={onExit} style={{ padding: "6px 14px", borderRadius: 6, border: "1px solid #334155", background: "#111827", color: "#94a3b8", fontSize: 11, cursor: "pointer", fontFamily: "inherit" }}>✕ Exit to Demo</button>
+          <button onClick={onExit} style={{ padding: "6px 14px", borderRadius: 6, border: "1px solid #334155", background: "#111827", color: "#94a3b8", fontSize: 11, cursor: "pointer", fontFamily: "inherit", display: "inline-flex", alignItems: "center", gap: 5 }}><Icon name="close" size={12} /> Exit to Demo</button>
         </div>
       )}
 
@@ -130,7 +131,7 @@ export default function AboutPage({ onExit }) {
       <div style={{ padding: "50px 40px 32px", textAlign: "center", background: "linear-gradient(180deg, #0f1729, #0a0e1a)", borderBottom: "1px solid #1e293b", opacity: anim ? 1 : 0, transition: "opacity 0.8s ease 0.2s" }}>
         {/* Innocence Theory Logo */}
         <div style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "8px 20px", borderRadius: 8, background: "#111827", border: "1px solid #1e293b", marginBottom: 20 }}>
-          {/* ✏️ Replace with <img src="/innocence-theory-logo.png" height={36} /> */}
+          {/* Replace with <img src="/innocence-theory-logo.png" height={36} /> */}
           <div style={{ width: 36, height: 36, borderRadius: 6, background: "linear-gradient(135deg, #a855f7, #ec4899)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, fontWeight: 800, color: "#fff" }}>IT</div>
           <div style={{ textAlign: "left" }}>
             <div style={{ fontSize: 14, fontWeight: 700, color: "#e2e8f0" }}>{INNOCENCE_THEORY.name}</div>
@@ -173,10 +174,10 @@ export default function AboutPage({ onExit }) {
               {/* Contact links */}
               <div style={{ display: "flex", flexDirection: "column", gap: 5, width: "100%" }}>
                 <a href={`mailto:${ARJUN.email}`} style={{ display: "flex", alignItems: "center", gap: 6, padding: "6px 10px", borderRadius: 5, background: "#111827", border: "1px solid #1e293b", color: "#94a3b8", fontSize: 10, textDecoration: "none" }}>
-                  📧 {ARJUN.email}
+                  <Icon name="mail" size={12} /> {ARJUN.email}
                 </a>
                 <a href={ARJUN.linkedin} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: 6, padding: "6px 10px", borderRadius: 5, background: "#111827", border: "1px solid #1e293b", color: "#3b82f6", fontSize: 10, textDecoration: "none" }}>
-                  💼 LinkedIn Profile
+                  <Icon name="briefcase" size={12} /> LinkedIn Profile
                 </a>
               </div>
             </div>
@@ -244,7 +245,7 @@ export default function AboutPage({ onExit }) {
           </div>
           <div style={{ fontSize: 13, color: "#94a3b8", lineHeight: 1.6, maxWidth: 550, margin: "0 auto 12px" }}>{INNOCENCE_THEORY.tagline}</div>
           <a href={INNOCENCE_THEORY.url} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "7px 18px", borderRadius: 6, background: "#a855f718", border: "1px solid #a855f744", color: "#a855f7", fontSize: 12, fontWeight: 600, textDecoration: "none" }}>
-            🌐 {INNOCENCE_THEORY.url}
+            <Icon name="globe" size={13} color="#a855f7" /> {INNOCENCE_THEORY.url}
           </a>
         </div>
 

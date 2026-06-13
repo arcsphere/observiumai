@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { Icon } from "../icons.jsx";
 
 const AUTO_PLAY_INTERVAL = 8000;
 
@@ -12,7 +13,7 @@ const WBF = ({ size = "sm" }) => {
   const lg = size === "lg";
   const badge = (href, icon, title, sub, color) => (
     <a href={href} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: lg ? 10 : 8, padding: lg ? "10px 18px" : "6px 14px", borderRadius: 8, background: `linear-gradient(135deg, ${color}12, #22c55e12)`, border: `1px solid ${color}33`, textDecoration: "none" }}>
-      <span style={{ fontSize: lg ? 22 : 15 }}>{icon}</span>
+      <Icon name={icon} size={lg ? 22 : 15} color={color} />
       <div>
         <div style={{ fontSize: lg ? 13 : 11, fontWeight: 700, color }}>{title}</div>
         <div style={{ fontSize: lg ? 11 : 9, color: "#94a3b8" }}>{sub}</div>
@@ -21,8 +22,8 @@ const WBF = ({ size = "sm" }) => {
   );
   return (
     <div style={{ display: "inline-flex", gap: 10, flexWrap: "wrap", justifyContent: "center" }}>
-      {badge("https://worldbiodiversityforum.org/", "🌍", "World Biodiversity Forum 2026", "Davos, Switzerland — Oral Presentation", "#f59e0b")}
-      {badge("https://aessconference.org/", "🎓", "AESS 2026", "Annual Conference", "#22c55e")}
+      {badge("https://worldbiodiversityforum.org/", "globe", "World Biodiversity Forum 2026", "Davos, Switzerland — Oral Presentation", "#f59e0b")}
+      {badge("https://aessconference.org/", "grad", "AESS 2026", "Annual Conference", "#22c55e")}
     </div>
   );
 };
@@ -92,7 +93,7 @@ const SLIDES = [
                   }}
                   onError={(e) => {
                     e.target.style.display = "none";
-                    e.target.parentNode.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px">🐍</div>`;
+                    e.target.parentNode.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#475569;font-size:12px;text-align:center;padding:8px">${s.name}</div>`;
                   }}
                 />
                 {/* Gradient overlay */}
@@ -184,14 +185,14 @@ const SLIDES = [
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, maxWidth: 700, textAlign: "left" }}>
           {[
-            { icon: "🔭", title: "Observability, not just monitoring", desc: "Inspired by software observability (OpenTelemetry) — adapted for ecosystems where data is messy, multimodal, and collected under duress.", c: "#3b82f6", t: 1.0 },
-            { icon: "🧩", title: "Transdisciplinary by design", desc: "Crosses health, ecology, agriculture, climate, and infrastructure. No single domain owns the signal — the framework connects them.", c: "#22c55e", t: 1.2 },
-            { icon: "📡", title: "Frontline-first capture", desc: "Voice, image, video, sensor, text, social media. No rigid forms. A farmer's distress call and an IoT sensor carry equal architectural weight.", c: "#f59e0b", t: 1.4 },
-            { icon: "⚖️", title: "Honest about uncertainty", desc: "Every signal carries quality tags, confidence gauges, gap flags, and tension markers. The framework doesn't pretend data is clean — it shows what's missing.", c: "#ef4444", t: 1.6 },
+            { icon: "telescope", title: "Observability, not just monitoring", desc: "Inspired by software observability (OpenTelemetry) — adapted for ecosystems where data is messy, multimodal, and collected under duress.", c: "#3b82f6", t: 1.0 },
+            { icon: "model", title: "Transdisciplinary by design", desc: "Crosses health, ecology, agriculture, climate, and infrastructure. No single domain owns the signal — the framework connects them.", c: "#22c55e", t: 1.2 },
+            { icon: "feed", title: "Frontline-first capture", desc: "Voice, image, video, sensor, text, social media. No rigid forms. A farmer's distress call and an IoT sensor carry equal architectural weight.", c: "#f59e0b", t: 1.4 },
+            { icon: "decision", title: "Honest about uncertainty", desc: "Every signal carries quality tags, confidence gauges, gap flags, and tension markers. The framework doesn't pretend data is clean — it shows what's missing.", c: "#ef4444", t: 1.6 },
           ].map(x => (
             <div key={x.title} style={{ padding: "14px 16px", background: "#111827", borderRadius: 8, borderLeft: `3px solid ${x.c}`, opacity: a?1:0, transition: `opacity 0.6s ease ${x.t}s` }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                <span style={{ fontSize: 18 }}>{x.icon}</span>
+                <Icon name={x.icon} size={18} color={x.c} />
                 <span style={{ fontSize: 13, fontWeight: 700, color: x.c }}>{x.title}</span>
               </div>
               <div style={{ fontSize: 11, color: "#94a3b8", lineHeight: 1.5 }}>{x.desc}</div>
@@ -212,18 +213,18 @@ const SLIDES = [
         {/* Pipeline */}
         <div style={{ display: "flex", gap: 4, flexWrap: "wrap", justifyContent: "center", marginBottom: 24 }}>
           {[
-            { icon: "📡", l: "Capture", c: "#f59e0b", s: "Multimodal intake" },
-            { icon: "🧹", l: "Cleanse", c: "#6b7280", s: "Quality + dedup" },
-            { icon: "👁️", l: "Observe", c: "#3b82f6", s: "Multi-scale context" },
-            { icon: "🔗", l: "Pattern", c: "#a855f7", s: "Cross-domain binding" },
-            { icon: "⚗️", l: "Compound", c: "#ec4899", s: "Cross-scale convergence" },
-            { icon: "💡", l: "Insight", c: "#22c55e", s: "Actionable intelligence" },
-            { icon: "🏛️", l: "Route", c: "#f43f5e", s: "5-layer stakeholder" },
-            { icon: "⚖️", l: "Decision", c: "#facc15", s: "Outcome + accountability" },
+            { icon: "capture", l: "Capture", c: "#f59e0b", s: "Multimodal intake" },
+            { icon: "cleanse", l: "Cleanse", c: "#6b7280", s: "Quality + dedup" },
+            { icon: "observe", l: "Observe", c: "#3b82f6", s: "Multi-scale context" },
+            { icon: "pattern", l: "Pattern", c: "#a855f7", s: "Cross-domain binding" },
+            { icon: "compound", l: "Compound", c: "#ec4899", s: "Cross-scale convergence" },
+            { icon: "insight", l: "Insight", c: "#22c55e", s: "Actionable intelligence" },
+            { icon: "routing", l: "Route", c: "#f43f5e", s: "5-layer stakeholder" },
+            { icon: "decision", l: "Decision", c: "#facc15", s: "Outcome + accountability" },
           ].map((p, i) => (
             <div key={p.l} style={{ display: "flex", alignItems: "center", gap: 3, opacity: a?1:0, transition: `opacity 0.3s ease ${0.6+i*0.1}s` }}>
               <div style={{ padding: "6px 10px", borderRadius: 6, background: `${p.c}15`, border: `1px solid ${p.c}33`, textAlign: "center", minWidth: 80 }}>
-                <div style={{ fontSize: 16 }}>{p.icon}</div>
+                <div><Icon name={p.icon} size={16} color={p.c} /></div>
                 <div style={{ fontSize: 10, fontWeight: 700, color: p.c }}>{p.l}</div>
                 <div style={{ fontSize: 7, color: "#475569" }}>{p.s}</div>
               </div>
@@ -235,13 +236,13 @@ const SLIDES = [
         {/* Three architectural pillars */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, maxWidth: 720 }}>
           {[
-            { title: "5 Information Tiers", items: ["📍 Local (village/site)", "🏘️ Zonal (taluk/block)", "🗺️ District", "🌍 Regional / State", "🏛️ Institutional (cross-agency)"], c: "#3b82f6", t: 1.6 },
-            { title: "5 Routing Layers", items: ["🔒 Hardcoded (statutory)", "📋 Regulatory (compliance)", "⚙️ Configurable (org-defined)", "🤝 Informal (trust networks)", "📡 Broadcast (public)"], c: "#f43f5e", t: 1.8 },
-            { title: "5 Redundancy Levels", items: ["Capture redundancy", "Transmission redundancy", "Processing redundancy", "Routing redundancy", "Intelligence redundancy"], c: "#22c55e", t: 2.0 },
+            { title: "5 Information Tiers", items: [["location", "Local (village/site)"], ["zonal", "Zonal (taluk/block)"], ["map", "District"], ["globe", "Regional / State"], ["institution", "Institutional (cross-agency)"]], c: "#3b82f6", t: 1.6 },
+            { title: "5 Routing Layers", items: [["lock", "Hardcoded (statutory)"], ["regulatory", "Regulatory (compliance)"], ["configurable", "Configurable (org-defined)"], ["informal", "Informal (trust networks)"], ["broadcast", "Broadcast (public)"]], c: "#f43f5e", t: 1.8 },
+            { title: "5 Redundancy Levels", items: [["capture", "Capture redundancy"], ["signal", "Transmission redundancy"], ["monitor", "Processing redundancy"], ["routing", "Routing redundancy"], ["insight", "Intelligence redundancy"]], c: "#22c55e", t: 2.0 },
           ].map(x => (
             <div key={x.title} style={{ padding: "12px 14px", background: "#111827", borderRadius: 8, textAlign: "left", opacity: a?1:0, transition: `opacity 0.6s ease ${x.t}s` }}>
               <div style={{ fontSize: 12, fontWeight: 700, color: x.c, marginBottom: 8 }}>{x.title}</div>
-              {x.items.map((it, i) => <div key={i} style={{ fontSize: 10, color: "#94a3b8", marginBottom: 3, lineHeight: 1.4 }}>{it}</div>)}
+              {x.items.map((it, i) => <div key={i} style={{ fontSize: 10, color: "#94a3b8", marginBottom: 3, lineHeight: 1.4, display: "flex", alignItems: "center", gap: 6 }}><Icon name={it[0]} size={11} color={x.c} /> {it[1]}</div>)}
             </div>
           ))}
         </div>
@@ -259,13 +260,13 @@ const SLIDES = [
         {/* Composition rules */}
         <div style={{ display: "flex", gap: 12, marginBottom: 24, maxWidth: 750 }}>
           {[
-            { label: "Observation", rule: "Corroboration across sources", example: "Farmer's bite + ASHA worker's cobra photo → confirmed encounter", c: "#3b82f6", icon: "👁️", t: 0.7 },
-            { label: "Pattern", rule: "Cross-domain binding", example: "Bite cluster + displacement + health system strain → conflict escalation", c: "#a855f7", icon: "🔗", t: 1.0 },
-            { label: "Compound", rule: "Cross-scale convergence", example: "Conflict pattern + drought forcing → compound ecological-health signal", c: "#ec4899", icon: "⚗️", t: 1.3 },
+            { label: "Observation", rule: "Corroboration across sources", example: "Farmer's bite + ASHA worker's cobra photo → confirmed encounter", c: "#3b82f6", icon: "observe", t: 0.7 },
+            { label: "Pattern", rule: "Cross-domain binding", example: "Bite cluster + displacement + health system strain → conflict escalation", c: "#a855f7", icon: "pattern", t: 1.0 },
+            { label: "Compound", rule: "Cross-scale convergence", example: "Conflict pattern + drought forcing → compound ecological-health signal", c: "#ec4899", icon: "compound", t: 1.3 },
           ].map(x => (
             <div key={x.label} style={{ flex: 1, padding: "14px", background: "#111827", borderRadius: 8, borderTop: `3px solid ${x.c}`, textAlign: "left", opacity: a?1:0, transition: `opacity 0.6s ease ${x.t}s` }}>
               <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }}>
-                <span style={{ fontSize: 18 }}>{x.icon}</span>
+                <Icon name={x.icon} size={18} color={x.c} />
                 <span style={{ fontSize: 14, fontWeight: 700, color: x.c }}>{x.label}</span>
               </div>
               <div style={{ fontSize: 11, color: "#e2e8f0", fontWeight: 600, marginBottom: 6 }}>{x.rule}</div>
@@ -277,13 +278,13 @@ const SLIDES = [
         {/* Key protocol features */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 8, maxWidth: 750 }}>
           {[
-            { label: "Risk Window Mode", desc: "Dynamic monitoring activation with configurable triggers, duration, scope, and guest authority access", icon: "🔴", t: 1.6 },
-            { label: "ILK Integration", desc: "Indigenous & Local Knowledge as flagged, toggle-able modality with retrospective reclassification", icon: "🌿", t: 1.8 },
-            { label: "De-duplication Ladder", desc: "Different dedup logic at every pipeline level — linking, not deleting", icon: "🪜", t: 2.0 },
-            { label: "Accountability Loop", desc: "Actions taken or not taken are recorded. Non-response becomes visible.", icon: "📋", t: 2.2 },
+            { label: "Risk Window Mode", desc: "Dynamic monitoring activation with configurable triggers, duration, scope, and guest authority access", icon: "dot", t: 1.6 },
+            { label: "ILK Integration", desc: "Indigenous & Local Knowledge as flagged, toggle-able modality with retrospective reclassification", icon: "ecology", t: 1.8 },
+            { label: "De-duplication Ladder", desc: "Different dedup logic at every pipeline level — linking, not deleting", icon: "ladder", t: 2.0 },
+            { label: "Accountability Loop", desc: "Actions taken or not taken are recorded. Non-response becomes visible.", icon: "clipboard", t: 2.2 },
           ].map(x => (
             <div key={x.label} style={{ padding: "10px 12px", background: "#0f172a", borderRadius: 6, border: "1px solid #1e293b", textAlign: "left", opacity: a?1:0, transition: `opacity 0.5s ease ${x.t}s` }}>
-              <div style={{ fontSize: 16, marginBottom: 4 }}>{x.icon}</div>
+              <div style={{ marginBottom: 4 }}><Icon name={x.icon} size={16} color="#cbd5e1" /></div>
               <div style={{ fontSize: 11, fontWeight: 700, color: "#e2e8f0", marginBottom: 3 }}>{x.label}</div>
               <div style={{ fontSize: 9, color: "#64748b", lineHeight: 1.4 }}>{x.desc}</div>
             </div>
@@ -297,12 +298,12 @@ const SLIDES = [
   { bg: "linear-gradient(135deg, #0a0e1a, #0a1a2e)",
     render: (a) => {
       const domains = [
-        { label: "Human-Wildlife\nConflict", c: "#ef4444", h: 85, ex: ["Snakebite clusters", "Crop raids", "Predator spillovers"], icon: "🐍" },
-        { label: "Water\nSecurity", c: "#3b82f6", h: 75, ex: ["Contamination signals", "Drought cascades", "Canal failures"], icon: "💧" },
-        { label: "Agricultural\nResilience", c: "#f59e0b", h: 80, ex: ["Crop stress anomalies", "Pest surges", "Soil degradation"], icon: "🌾" },
-        { label: "Urban\nEcology", c: "#a855f7", h: 70, ex: ["Species displacement", "Green cover loss", "Heat islands"], icon: "🏙️" },
-        { label: "Disaster Early\nWarning", c: "#ec4899", h: 90, ex: ["Flood precursors", "Landslide signals", "Fire risk chains"], icon: "⚠️" },
-        { label: "Public Health\nSurveillance", c: "#22c55e", h: 78, ex: ["Disease vectors", "Environmental health", "Zoonotic bridges"], icon: "🏥" },
+        { label: "Human-Wildlife\nConflict", c: "#ef4444", h: 85, ex: ["Snakebite clusters", "Crop raids", "Predator spillovers"], icon: "snake" },
+        { label: "Water\nSecurity", c: "#3b82f6", h: 75, ex: ["Contamination signals", "Drought cascades", "Canal failures"], icon: "droplet" },
+        { label: "Agricultural\nResilience", c: "#f59e0b", h: 80, ex: ["Crop stress anomalies", "Pest surges", "Soil degradation"], icon: "agriculture" },
+        { label: "Urban\nEcology", c: "#a855f7", h: 70, ex: ["Species displacement", "Green cover loss", "Heat islands"], icon: "district" },
+        { label: "Disaster Early\nWarning", c: "#ec4899", h: 90, ex: ["Flood precursors", "Landslide signals", "Fire risk chains"], icon: "warning" },
+        { label: "Public Health\nSurveillance", c: "#22c55e", h: 78, ex: ["Disease vectors", "Environmental health", "Zoonotic bridges"], icon: "health" },
       ];
       return (
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100%", textAlign: "center", padding: "30px 40px" }}>
@@ -315,7 +316,7 @@ const SLIDES = [
             {domains.map((d, i) => (
               <div key={d.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", width: 105, opacity: a?1:0, transition: `opacity 0.5s ease ${0.8+i*0.2}s` }}>
                 <div style={{ width: "100%", height: a?(d.h/100)*210:0, transition: `height 1.2s ease ${1+i*0.15}s`, background: `linear-gradient(180deg, ${d.c}, ${d.c}88)`, borderRadius: "8px 8px 0 0", padding: "8px 5px", overflow: "hidden" }}>
-                  <span style={{ fontSize: 20 }}>{d.icon}</span>
+                  <Icon name={d.icon} size={20} color={d.c} />
                   {d.ex.map((e, j) => <div key={j} style={{ fontSize: 7, color: "#fff", opacity: 0.85, marginBottom: 1 }}>• {e}</div>)}
                 </div>
                 <div style={{ fontSize: 8, fontWeight: 600, color: d.c, marginTop: 5, textAlign: "center", whiteSpace: "pre-line", lineHeight: 1.2 }}>{d.label}</div>
@@ -338,17 +339,17 @@ const SLIDES = [
         <div style={{ fontSize: 26, fontWeight: 700, color: "#e2e8f0", marginBottom: 18, opacity: a?1:0, transition: "opacity 0.8s ease 0.4s" }}>10 incidents. 6 modalities. 5 domains.<br /><span style={{ color: "#ec4899" }}>One compound signal no agency can see alone.</span></div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7, maxWidth: 660, textAlign: "left" }}>
           {[
-            { icon: "🎙️", text: "Farmer bitten by cobra — calls in Kannada", t: 0.7 },
-            { icon: "📷", text: "ASHA health worker photographs cobra near canal", t: 0.9 },
-            { icon: "📡", text: "IoT sensors detect soil moisture collapse", t: 1.1 },
-            { icon: "🎙️", text: "PHC nurse: 2nd bite, 3 anti-venom vials left", t: 1.3 },
-            { icon: "🎥", text: "Anonymous video: highway blasting near wetland", t: 1.5 },
-            { icon: "📷", text: "Camera trap: daytime rat snake — atypical", t: 1.7 },
-            { icon: "📱", text: "Social: 'Third snake in our village this week'", t: 1.9 },
-            { icon: "📡", text: "IMD: 23 days no rain, +2.3°C anomaly", t: 2.1 },
+            { icon: "voice", text: "Farmer bitten by cobra — calls in Kannada", t: 0.7 },
+            { icon: "image", text: "ASHA health worker photographs cobra near canal", t: 0.9 },
+            { icon: "sensor", text: "IoT sensors detect soil moisture collapse", t: 1.1 },
+            { icon: "voice", text: "PHC nurse: 2nd bite, 3 anti-venom vials left", t: 1.3 },
+            { icon: "video", text: "Anonymous video: highway blasting near wetland", t: 1.5 },
+            { icon: "image", text: "Camera trap: daytime rat snake — atypical", t: 1.7 },
+            { icon: "social", text: "Social: 'Third snake in our village this week'", t: 1.9 },
+            { icon: "sensor", text: "IMD: 23 days no rain, +2.3°C anomaly", t: 2.1 },
           ].map((x, i) => (
             <div key={i} style={{ display: "flex", gap: 8, alignItems: "center", padding: "6px 10px", background: "#111827", borderRadius: 5, opacity: a?1:0, transition: `opacity 0.5s ease ${x.t}s` }}>
-              <span style={{ fontSize: 15 }}>{x.icon}</span><span style={{ fontSize: 11, color: "#cbd5e1", lineHeight: 1.3 }}>{x.text}</span>
+              <Icon name={x.icon} size={15} color="#94a3b8" /><span style={{ fontSize: 11, color: "#cbd5e1", lineHeight: 1.3 }}>{x.text}</span>
             </div>
           ))}
         </div>
@@ -367,8 +368,8 @@ const SLIDES = [
         <div style={{ fontSize: 22, color: "#22c55e", fontWeight: 700, marginTop: 24, opacity: a?1:0, transition: "opacity 0.8s ease 1.3s" }}>OBSERVIUM·AI connects them.</div>
         <div style={{ marginTop: 24, opacity: a?1:0, transition: "opacity 0.8s ease 1.6s" }}><WBF size="lg" /></div>
         <div style={{ marginTop: 20, display: "flex", gap: 14, opacity: a?1:0, transition: "opacity 0.8s ease 1.9s" }}>
-          <div style={{ padding: "10px 20px", borderRadius: 8, background: "#22c55e22", border: "1px solid #22c55e44", color: "#22c55e", fontSize: 13, fontWeight: 600 }}>🖥️ See the Live Demo</div>
-          <div style={{ padding: "10px 20px", borderRadius: 8, background: "#3b82f622", border: "1px solid #3b82f644", color: "#3b82f6", fontSize: 13, fontWeight: 600 }}>📄 WBF 2026 Paper</div>
+          <div style={{ padding: "10px 20px", borderRadius: 8, background: "#22c55e22", border: "1px solid #22c55e44", color: "#22c55e", fontSize: 13, fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="monitor" size={14} /> See the Live Demo</div>
+          <div style={{ padding: "10px 20px", borderRadius: 8, background: "#3b82f622", border: "1px solid #3b82f644", color: "#3b82f6", fontSize: 13, fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 6 }}><Icon name="file" size={14} /> WBF 2026 Paper</div>
         </div>
         <div style={{ marginTop: 20, fontSize: 12, color: "#475569", opacity: a?1:0, transition: "opacity 0.8s ease 2.2s" }}>
           Arjun Shrivatsan &nbsp;•&nbsp; gurumurthy.ar@northeastern.edu &nbsp;•&nbsp; Dinesh Kumar Chandrasekaran, RV University
@@ -418,7 +419,7 @@ export default function PitchDeck({ onExit }) {
 
       <div style={{ position: "absolute", top: 12, right: 14, display: "flex", alignItems: "center", gap: 10, fontSize: 9, color: "#334155", cursor: "default" }} onClick={e => e.stopPropagation()}>
         <span>← prev | next → | [A] auto</span>
-        {onExit && <button onClick={onExit} style={{ padding: "3px 9px", borderRadius: 4, border: "1px solid #334155", background: "#111827", color: "#94a3b8", fontSize: 9, cursor: "pointer", fontFamily: "inherit" }}>✕ Exit to Demo</button>}
+        {onExit && <button onClick={onExit} style={{ padding: "3px 9px", borderRadius: 4, border: "1px solid #334155", background: "#111827", color: "#94a3b8", fontSize: 9, cursor: "pointer", fontFamily: "inherit", display: "inline-flex", alignItems: "center", gap: 4 }}><Icon name="close" size={10} /> Exit to Demo</button>}
       </div>
 
       {autoPlay && <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3 }}><div style={{ height: "100%", background: "linear-gradient(90deg, #22c55e, #3b82f6, #a855f7)", animation: `prog ${AUTO_PLAY_INTERVAL}ms linear` }} key={slide} /></div>}

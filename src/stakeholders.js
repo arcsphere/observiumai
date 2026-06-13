@@ -6,11 +6,11 @@
 
 // ── TIERS OF PARTICIPATION (authority layers) ──
 export const LAYERS = [
-  { key: "hardcoded", label: "Hardcoded", subtitle: "Mandatory statutory routes — always fire", icon: "🔒", color: "#ef4444", description: "Non-negotiable routing. These are legal/statutory obligations that trigger automatically regardless of configuration. Cannot be disabled." },
-  { key: "regulatory", label: "Regulatory", subtitle: "Compliance & reporting obligations", icon: "📋", color: "#f59e0b", description: "Routes driven by regulatory frameworks, reporting mandates, and compliance requirements. Configurable thresholds, but the obligation to report is fixed." },
-  { key: "configurable", label: "Configurable", subtitle: "Org-defined escalation paths", icon: "⚙️", color: "#3b82f6", description: "Organization-designed routing rules. Which teams, what thresholds, what channels. Fully customizable per deployment context." },
-  { key: "informal", label: "Informal / Flexible", subtitle: "Trust networks & local knowledge", icon: "🤝", color: "#a855f7", description: "Community networks, local experts, trusted intermediaries. These routes exist because someone knows someone — and that knowledge is often faster and more effective than formal channels." },
-  { key: "broadcast", label: "Broadcast", subtitle: "Public awareness & open alerts", icon: "📡", color: "#22c55e", description: "Open dissemination. Media, public dashboards, community alerts. Information becomes publicly available — with appropriate anonymization and sensitivity controls." },
+  { key: "hardcoded", label: "Hardcoded", subtitle: "Mandatory statutory routes — always fire", icon: "lock", color: "#ef4444", description: "Non-negotiable routing. These are legal/statutory obligations that trigger automatically regardless of configuration. Cannot be disabled." },
+  { key: "regulatory", label: "Regulatory", subtitle: "Compliance & reporting obligations", icon: "regulatory", color: "#f59e0b", description: "Routes driven by regulatory frameworks, reporting mandates, and compliance requirements. Configurable thresholds, but the obligation to report is fixed." },
+  { key: "configurable", label: "Configurable", subtitle: "Org-defined escalation paths", icon: "configurable", color: "#3b82f6", description: "Organization-designed routing rules. Which teams, what thresholds, what channels. Fully customizable per deployment context." },
+  { key: "informal", label: "Informal / Flexible", subtitle: "Trust networks & local knowledge", icon: "informal", color: "#a855f7", description: "Community networks, local experts, trusted intermediaries. These routes exist because someone knows someone — and that knowledge is often faster and more effective than formal channels." },
+  { key: "broadcast", label: "Broadcast", subtitle: "Public awareness & open alerts", icon: "broadcast", color: "#22c55e", description: "Open dissemination. Media, public dashboards, community alerts. Information becomes publicly available — with appropriate anonymization and sensitivity controls." },
 ];
 
 // ── INSIGHT this stakeholder context is organized around (from Tab 3) ──
@@ -23,9 +23,9 @@ export const SOURCE_INSIGHT = {
 
 // ── ORIGIN: how this stakeholder entered the map ──
 export const ORIGIN_TYPES = {
-  defined:    { key: "defined",    label: "Defined",    short: "DEF", icon: "📌", color: "#3b82f6", description: "Known up front. A statutory, regulatory, or org-defined role identified at design time." },
-  discovered: { key: "discovered", label: "Discovered", short: "DSC", icon: "🔍", color: "#22c55e", description: "Surfaced from incoming signals during the scenario — an actor the data revealed, not one we listed in advance." },
-  gap:        { key: "gap",        label: "Gap / Inferred", short: "GAP", icon: "🕳️", color: "#ef4444", description: "A role the system reasons should exist for this problem, but which no one is currently filling or no channel reaches. Identified through inference." },
+  defined:    { key: "defined",    label: "Defined",    short: "DEF", icon: "defined", color: "#3b82f6", description: "Known up front. A statutory, regulatory, or org-defined role identified at design time." },
+  discovered: { key: "discovered", label: "Discovered", short: "DSC", icon: "discovered", color: "#22c55e", description: "Surfaced from incoming signals during the scenario — an actor the data revealed, not one we listed in advance." },
+  gap:        { key: "gap",        label: "Gap / Inferred", short: "GAP", icon: "gap", color: "#ef4444", description: "A role the system reasons should exist for this problem, but which no one is currently filling or no channel reaches. Identified through inference." },
 };
 
 // ── RACI: each stakeholder's role on the current scenario response ──
